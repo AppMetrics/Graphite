@@ -2,12 +2,13 @@ version: 1.0.{build}
 image: Visual Studio 2017
 environment:
   COVERALLS_REPO_TOKEN:
-    secure: LJmt2sYpRSDTf+DSWZ0+vOG+PnFvcYwqIk+CXJGKBo0QR4p+8WotE8gcfPgjmGYp
+    secure: ib5FPsslWC/6i1wuOCCWFPLdw56JUhDQ8YsyQpCeskh9FswTXybgkQSGTxkrDLwp
   PreReleaseSuffix: alpha
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   DOTNET_CLI_TELEMETRY_OPTOUT: true
 build_script:
 - ps: .\build.ps1 -Target AppVeyor
+test: off
 artifacts:
 - path: artifacts/packages/*.nupkg
 - path: artifacts/coverage/*.xml
