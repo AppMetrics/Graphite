@@ -1,38 +1,39 @@
-# App Metrics Graphite Extensions
+# App Metrics Prometheus Extensions
 
-[![Official Site](https://img.shields.io/badge/site-appmetrics-blue.svg)](https://alhardy.github.io/app-metrics-docs/getting-started/intro.html) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Coverage Status](https://coveralls.io/repos/github/alhardy/AppMetrics.Extensions.Graphite/badge.svg?branch=master)](https://coveralls.io/github/alhardy/AppMetrics.Extensions.Graphite?branch=master)
+[![Official Site](https://img.shields.io/badge/site-appmetrics-blue.svg)](https://alhardy.github.io/app-metrics-docs/getting-started/intro.html) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Coverage Status](https://coveralls.io/repos/github/alhardy/AppMetrics.Extensions.Prometheus/badge.svg?branch=master)](https://coveralls.io/github/alhardy/AppMetrics.Extensions.Prometheus?branch=master)
 
 |AppVeyor|Travis|
 |:--------:|:--------:|
-|[![Build status](https://ci.appveyor.com/api/projects/status/w2l7xmxlvyxy3988?svg=true)](https://ci.appveyor.com/project/alhardy/appmetrics-extensions-graphite/branch/master)|[![Build status](https://travis-ci.org/alhardy/AppMetrics.Extensions.Graphite.svg?branch=master)](https://travis-ci.org/alhardy/AppMetrics.Extensions.Graphite?branch=master)|
+|[![Build status](https://ci.appveyor.com/api/projects/status/y9xmuw5q26yyvcnc?svg=true)](https://ci.appveyor.com/project/alhardy/appmetrics-extensions-prometheus/branch/master)|[![Build status](https://travis-ci.org/alhardy/AppMetrics.Extensions.Prometheus.svg?branch=master)](https://travis-ci.org/alhardy/AppMetrics.Extensions.Prometheus?branch=master)|
 
 |Package|Dev Release|Pre-Release|Release|
 |------|:--------:|:--------:|:--------:|
-|App.Metrics.Extensions.Reporting.Graphite|[![MyGet Status](https://img.shields.io/myget/alhardy/v/App.Metrics.Extensions.Reporting.Graphite.svg)](https://www.myget.org/feed/alhardy/package/nuget/App.Metrics.Extensions.Reporting.Graphite)|[![NuGet Status](https://img.shields.io/nuget/vpre/App.Metrics.Extensions.Reporting.Graphite.svg)](https://www.nuget.org/packages/App.Metrics.Extensions.Reporting.Graphite/)|[![NuGet Status](https://img.shields.io/nuget/v/App.Metrics.Extensions.Reporting.Graphite.svg)](https://www.nuget.org/packages/App.Metrics.Extensions.Reporting.Graphite/)
+|App.Metrics.Extensions.Reporting.Prometheus|[![MyGet Status](https://img.shields.io/myget/alhardy/v/App.Metrics.Extensions.Reporting.Prometheus.svg)](https://www.myget.org/feed/alhardy/package/nuget/App.Metrics.Extensions.Reporting.Prometheus)|[![NuGet Status](https://img.shields.io/nuget/vpre/App.Metrics.Extensions.Reporting.Prometheus.svg)](https://www.nuget.org/packages/App.Metrics.Extensions.Reporting.Prometheus/)|[![NuGet Status](https://img.shields.io/nuget/v/App.Metrics.Extensions.Reporting.Prometheus.svg)](https://www.nuget.org/packages/App.Metrics.Extensions.Reporting.Prometheus/)
+|App.Metrics.Formatters.Prometheus|[![MyGet Status](https://img.shields.io/myget/alhardy/v/App.Metrics.Formatters.Prometheus.svg)](https://www.myget.org/feed/alhardy/package/nuget/App.Metrics.Formatters.Prometheus)|[![NuGet Status](https://img.shields.io/nuget/vpre/App.Metrics.Formatters.Prometheus.svg)](https://www.nuget.org/packages/App.Metrics.Extensions.Reporting.Prometheus/)|[![NuGet Status](https://img.shields.io/nuget/v/AApp.Metrics.Formatters.Prometheus.svg)](https://www.nuget.org/packages/App.Metrics.Formatters.Prometheus/)
 
 ## What is it?
 
-The repo contains Graphite extension packages to [App Metrics](https://github.com/alhardy/AppMetrics).
+The repo contains Prometheus extension packages to [App Metrics](https://github.com/alhardy/AppMetrics).
 
-#### Grafana/Graphite Web Monitoring
+#### Grafana/Prometheus Web Monitoring
 
-![Grafana/Graphite Generic Web Dashboard Demo](#todo) *TODO*
+![Grafana/Prometheus Generic Web Dashboard Demo](#todo) *TODO*
 
 > Grab the dashboard [here](##todo) *TODO*
 
-#### Grafana/Graphite OAuth2 Client Monitoring on a Web API
+#### Grafana/Prometheus OAuth2 Client Monitoring on a Web API
 
-![Grafana/Graphite Generic OAuth2 Web Dashboard Demo](#todo) *TODO*
+![Grafana/Prometheus Generic OAuth2 Web Dashboard Demo](#todo) *TODO*
 
 > Grab the dashboard [here](#todo) *TODO*
 
-### Grafana/Graphite Web Application Setup
+### Grafana/Prometheus Web Application Setup
 
 *TODO*
 
 ## How to build
 
-[AppVeyor](https://ci.appveyor.com/project/alhardy/appmetrics-extensions-graphite/branch/master) and [Travis CI](https://travis-ci.org/alhardy/AppMetrics.Extensions.Graphite) builds are triggered on commits and PRs to `dev` and `master` branches.
+[AppVeyor](https://ci.appveyor.com/project/alhardy/appmetrics-extensions-prometheus/branch/master) and [Travis CI](https://travis-ci.org/alhardy/AppMetrics.Extensions.Prometheus) builds are triggered on commits and PRs to `dev` and `master` branches.
 
 See the following for build arguments and running locally.
 
