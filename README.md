@@ -6,9 +6,9 @@
 |:--------:|:--------:|
 |[![Build status](https://ci.appveyor.com/api/projects/status/w2l7xmxlvyxy3988?svg=true)](https://ci.appveyor.com/project/alhardy/appmetrics-extensions-graphite/branch/master)|[![Build status](https://travis-ci.org/alhardy/AppMetrics.Extensions.Graphite.svg?branch=master)](https://travis-ci.org/alhardy/AppMetrics.Extensions.Graphite?branch=master)|
 
-|Package|Dev Release|Latest Release|
-|------|:--------:|:--------:|
-|App.Metrics.Extensions.Reporting.Graphite|[![MyGet Status](https://img.shields.io/myget/alhardy/v/App.Metrics.Extensions.Reporting.Graphite.svg)](https://www.myget.org/feed/alhardy/package/nuget/App.Metrics.Extensions.Reporting.Graphite)|[![NuGet Status](https://img.shields.io/nuget/v/App.Metrics.Extensions.Reporting.Graphite.svg)](https://www.nuget.org/packages/App.Metrics.Extensions.Reporting.Graphite/)
+|Package|Dev Release|Pre-Release|Release|
+|------|:--------:|:--------:|:--------:|
+|App.Metrics.Extensions.Reporting.Graphite|[![MyGet Status](https://img.shields.io/myget/alhardy/v/App.Metrics.Extensions.Reporting.Graphite.svg)](https://www.myget.org/feed/alhardy/package/nuget/App.Metrics.Extensions.Reporting.Graphite)|[![NuGet Status](https://img.shields.io/nuget/vpre/App.Metrics.Extensions.Reporting.Graphite.svg)](https://www.nuget.org/packages/App.Metrics.Extensions.Reporting.Graphite/)|[![NuGet Status](https://img.shields.io/nuget/v/App.Metrics.Extensions.Reporting.Graphite.svg)](https://www.nuget.org/packages/App.Metrics.Extensions.Reporting.Graphite/)
 
 ## What is it?
 
