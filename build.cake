@@ -145,7 +145,6 @@ Task("Build")
 			}
 
 			Context.Information("Building as " + settings.Framework + ": " +  project.Path.ToString());
-        }	 
 
 			DotNetCoreBuild(project.Path.ToString(), settings);
 		}
