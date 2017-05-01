@@ -14,9 +14,9 @@
     <AssemblyName>App.Metrics.Extensions.Reporting.Graphite</AssemblyName>
     <PackageId>App.Metrics.Extensions.Reporting.Graphite</PackageId>
     <PackageTags>Metrics;Monitoring;Instrumentation;Reporting;Graphite</PackageTags>
-    <PackageIconUrl>https://alhardy.github.io/app-metrics-docs/logo.png</PackageIconUrl>
-    <PackageProjectUrl>https://alhardy.github.io/app-metrics-docs/getting-started/reporting/index.html</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/alhardy/AppMetrics.Reporting/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageIconUrl>http://app-metrics.io/logo.png</PackageIconUrl>
+    <PackageProjectUrl>http://app-metrics.io/reporting/graphite.html</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/alhardy/AppMetrics.Extensions.Graphite/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>git://github.com/alhardy/AppMetrics.Extensions.Graphite</RepositoryUrl>    
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
