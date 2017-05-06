@@ -1,7 +1,13 @@
-﻿using System;
+﻿// <copyright file="GraphiteReporterProvider.cs" company="Allan Hardy">
+// Copyright (c) Allan Hardy. All rights reserved.
+// </copyright>
+
+using System;
 using App.Metrics.Abstractions.Filtering;
 using App.Metrics.Abstractions.Reporting;
 using App.Metrics.Extensions.Reporting.Graphite.Client;
+using App.Metrics.Internal;
+using App.Metrics.Reporting;
 using Microsoft.Extensions.Logging;
 
 namespace App.Metrics.Extensions.Reporting.Graphite
@@ -10,38 +16,40 @@ namespace App.Metrics.Extensions.Reporting.Graphite
     {
         private readonly GraphiteReporterSettings _settings;
 
-        public GraphiteReporterProvider(GraphiteReporterSettings settings, IFilterMetrics filter)
+        public GraphiteReporterProvider(GraphiteReporterSettings settings)
         {
-            if (settings == null)
-            {
-                throw new ArgumentNullException(nameof(settings));
-            }
-
-            _settings = settings;
-            Filter = filter;
+            _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+            Filter = new NoOpMetricsFilter();
         }
 
-        /// <inheritdoc />
+        public GraphiteReporterProvider(GraphiteReporterSettings settings, IFilterMetrics fitler)
+        {
+            _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+            Filter = fitler ?? new NoOpMetricsFilter();
+        }
+
+        public IFilterMetrics Filter { get; }
+
         public IMetricReporter CreateMetricReporter(string name, ILoggerFactory loggerFactory)
         {
-            GraphiteSender sender;
-            switch (_settings.ConnectionType)
-            {
-                case ConnectionType.Udp:
-                    sender = new UdpGraphiteSender(loggerFactory, _settings.Host, _settings.Port);
-                    break;
-                case ConnectionType.Tcp:
-                    sender = new TcpGraphiteSender(loggerFactory, _settings.Host, _settings.Port);
-                    break;
+            var graphtieClient = new GraphiteClient(
+                loggerFactory,
+                _settings.GraphiteSettings,
+                _settings.HttpPolicy);
+            var payloadBuilder = new GraphitePayloadBuilder();
 
-                default:
-                    throw new InvalidOperationException("Unknown ConnectionType");
-            }
-
-            return new GraphiteReporter(sender, _settings.MetricNameFormatter, name, _settings.ReportInterval, loggerFactory);
+            return new ReportRunner<GraphitePayload>(
+                async p =>
+                {
+                    var result = await graphtieClient.WriteAsync(p.Payload());
+                    return result.Success;
+                },
+                payloadBuilder,
+                _settings.ReportInterval,
+                name,
+                loggerFactory,
+                _settings.MetricNameFormatter,
+                _settings.DataKeys);
         }
-
-        /// <inheritdoc />
-        public IFilterMetrics Filter { get; }
     }
 }

@@ -1,10 +1,18 @@
-﻿using App.Metrics.Abstractions.Filtering;
+﻿// <copyright file="GraphiteReporterExtensions.cs" company="Allan Hardy">
+// Copyright (c) Allan Hardy. All rights reserved.
+// </copyright>
+
+using System;
+using App.Metrics.Abstractions.Filtering;
+using App.Metrics.Extensions.Reporting.Graphite;
 using App.Metrics.Extensions.Reporting.Graphite.Client;
 using App.Metrics.Reporting.Abstractions;
 
-namespace App.Metrics.Extensions.Reporting.Graphite
+// ReSharper disable CheckNamespace
+namespace App.Metrics.Reporting.Interfaces
 {
-    public static class GraphiteReporterExtentions
+    // ReSharper restore CheckNamespace
+    public static class GraphiteReporterExtensions
     {
         public static IReportFactory AddGraphite(
             this IReportFactory factory,
@@ -17,21 +25,13 @@ namespace App.Metrics.Extensions.Reporting.Graphite
 
         public static IReportFactory AddGraphite(
             this IReportFactory factory,
-            string host,
-            int port,
-            ConnectionType connectionType = ConnectionType.Tcp,
-            string metricTemplate = null,
+            Uri baseAddress,
             IFilterMetrics filter = null)
         {
             var settings = new GraphiteReporterSettings
-            {
-                Host = host,
-                Port = port,
-                ConnectionType = connectionType,
-                MetricNameFormatter = string.IsNullOrEmpty(metricTemplate)
-                    ? new GraphiteMetricNameFormatter()
-                    : new GraphiteMetricNameFormatter(metricTemplate)
-            };
+                           {
+                               GraphiteSettings = new GraphiteSettings(baseAddress)
+                           };
 
             factory.AddGraphite(settings, filter);
             return factory;

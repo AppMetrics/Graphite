@@ -1,24 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// <copyright file="LoggingEvents.cs" company="Allan Hardy">
+// Copyright (c) Allan Hardy. All rights reserved.
+// </copyright>
 
 namespace App.Metrics.Extensions.Reporting.Graphite
 {
-    public enum LoggingEvents
+    public class LoggingEvents
     {
-        /// <summary>
-        /// Error while sending metrics using TcpClient
-        /// </summary>
-        TcpSendError,
-
-        /// <summary>
-        /// Error while creating TcpClient
-        /// </summary>
-        TcpClientCreateError,
-
-        /// <summary>
-        /// Error while sending metrics using UdpClient
-        /// </summary>
-        UdpSendError
+        public const int GraphiteWriteError = 5000;
     }
 }

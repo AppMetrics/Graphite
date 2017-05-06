@@ -1,8 +1,10 @@
 ﻿using System;
 using App.Metrics.Configuration;
 using App.Metrics.Extensions.Reporting.Graphite;
+using App.Metrics.Extensions.Reporting.Graphite.Client;
 using App.Metrics.Filtering;
 using App.Metrics.Graphite.Sandbox.JustForTesting;
+using App.Metrics.Reporting.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -70,7 +72,11 @@ namespace App.Metrics.Graphite.Sandbox
                          options =>
                          {
                              options.WithGlobalTags(
-                                 (globalTags, info) => { globalTags.Add("app", info.EntryAssemblyName); });
+                                 (globalTags, info) =>
+                                 {
+                                     globalTags.Add("app", info.EntryAssemblyName);
+                                     globalTags.Add("server", info.MachineName);
+                                 });
                          }).
                      AddJsonSerialization().
                      AddReporting(
@@ -79,9 +85,14 @@ namespace App.Metrics.Graphite.Sandbox
                              factory.AddGraphite(
                                  new GraphiteReporterSettings
                                  {
-                                     ConnectionType = ConnectionType.Tcp,
-                                     Host = "todo",
-                                     Port = 2003,
+                                     HttpPolicy = new HttpPolicy
+                                                  {
+                                                      FailuresBeforeBackoff = 3,
+                                                      BackoffPeriod = TimeSpan.FromSeconds(30),
+                                                      Timeout = TimeSpan.FromSeconds(10)
+                                                  },
+                                     GraphiteSettings = new GraphiteSettings(new Uri("net.tcp://localhost:32771")),
+                                     // GraphiteSettings = new GraphiteSettings(new Uri("net.udp://localhost:32771")),
                                      ReportInterval = TimeSpan.FromSeconds(5)
                                  });
                          }).
