@@ -35,6 +35,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "visualization", "visualization", "{5BC3B2AF-AFC7-4C92-BD1E-D347E83B2497}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "grafana-dashboards", "grafana-dashboards", "{44E50731-4AE5-456F-A84C-CE3C4C977097}"
+	ProjectSection(SolutionItems) = preProject
+		visualization\grafana-dashbaords\App Metrics - OAuth2 Client Monitoring - Graphite.json = visualization\grafana-dashbaords\App Metrics - OAuth2 Client Monitoring - Graphite.json
+		visualization\grafana-dashbaords\App Metrics - Web Monitoring - Graphite.json = visualization\grafana-dashbaords\App Metrics - Web Monitoring - Graphite.json
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sandbox", "sandbox", "{70127293-B35A-4C1C-846F-75B26D0D2E73}"
 EndProject

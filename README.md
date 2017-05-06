@@ -18,19 +18,23 @@ The repo contains Graphite extension packages to [App Metrics](https://github.co
 
 #### Grafana/Graphite Web Monitoring
 
-![Grafana/Graphite Generic Web Dashboard Demo](#todo) *TODO*
+![Grafana/Graphite Generic Web Dashboard Demo](https://github.com/alhardy/AppMetrics.DocFx/blob/master/images/generic_grafana_dashboard_demo.gif)
 
-> Grab the dashboard [here](##todo) *TODO*
+> Grab the dashboard [here](https://grafana.com/dashboards/2192)
 
 #### Grafana/Graphite OAuth2 Client Monitoring on a Web API
 
-![Grafana/Graphite Generic OAuth2 Web Dashboard Demo](#todo) *TODO*
+![Grafana/Graphite Generic OAuth2 Web Dashboard Demo](https://github.com/alhardy/AppMetrics.DocFx/blob/master/images/generic_grafana_oauth2_dashboard_demo.gif)
 
-> Grab the dashboard [here](#todo) *TODO*
+> Grab the dashboard [here](https://grafana.com/dashboards/2198)
 
 ### Grafana/Graphite Web Application Setup
 
-*TODO*
+- Setup a [Graphite](https://hub.docker.com/r/ennexa/graphite/) container.
+- Download and install [Grafana](https://grafana.com/grafana/download), then create a new [Graphite Datasource](http://docs.grafana.org/features/datasources/graphite/) and [import](http://docs.grafana.org/reference/export_import/#importing-a-dashboard) App.Metrics [web dashboard](https://grafana.com/dashboards/2192)
+- Drop in the `App.Metrics.Extensions.Mvc` and `App.Metrics.Extensions.Reporting.Graphite` nuget packages into your web application. 
+- Add [App.Metrics configuration](https://alhardy.github.io/app-metrics-docs/getting-started/fundamentals/middleware-configuration.html) to the `Startup.cs` of your web application, including the [Graphite reporter configuration](http://app-metrics.io/reporting/graphite.html). *You might want to check out the [Sandbox](https://github.com/alhardy/AppMetrics.Extensions.Graphite/tree/master/sandbox/App.Metrics.Graphite.Sandbox) or [Sample](https://github.com/alhardy/AppMetrics.Samples) projects if you get stuck*
+- Run your app and Grafana at visit `http://localhost:3000`
 
 ## How to build
 
