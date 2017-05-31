@@ -127,10 +127,11 @@ Task("Build")
     .IsDependentOn("Restore")
     .Does(() =>
 {	
-	var settings = new DotNetCoreBuildSettings  { Configuration = configuration, VersionSuffix = versionSuffix };
+	// var settings = new DotNetCoreBuildSettings  { Configuration = configuration, VersionSuffix = versionSuffix };
+	var settings = new DotNetCoreBuildSettings  { Configuration = configuration };
 
 	Context.Information("Building using preReleaseSuffix: " + preReleaseSuffix);
-	Context.Information("Building using versionSuffix: " + versionSuffix);
+	// Context.Information("Building using versionSuffix: " + versionSuffix);
 
 	// Workaround to fixing pre-release version package references - https://github.com/NuGet/Home/issues/4337
 	settings.ArgumentCustomization = args=>args.Append("/t:Restore /p:RestoreSources=" + @"""C:\Program Files (x86)\Microsoft SDKs\NuGetPackages\""" + ";https://api.nuget.org/v3/index.json;https://www.myget.org/F/alhardy/api/v3/index.json;");
@@ -182,13 +183,13 @@ Task("Pack")
 	}
 
 	Context.Information("Packing using preReleaseSuffix: " + preReleaseSuffix);
-	Context.Information("Packing using versionSuffix: " + versionSuffix);
+	// Context.Information("Packing using versionSuffix: " + versionSuffix);
 
     var settings = new DotNetCorePackSettings
     {
         Configuration = configuration,
         OutputDirectory = packagesDir,
-        VersionSuffix = versionSuffix,
+        // VersionSuffix = versionSuffix,
 		NoBuild = true
     };
     
