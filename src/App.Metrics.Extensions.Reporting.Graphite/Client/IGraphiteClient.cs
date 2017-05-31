@@ -4,6 +4,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using App.Metrics.Formatting.Graphite;
 
 namespace App.Metrics.Extensions.Reporting.Graphite.Client
 {

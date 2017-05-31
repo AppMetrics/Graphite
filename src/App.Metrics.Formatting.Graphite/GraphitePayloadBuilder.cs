@@ -9,9 +9,9 @@ using System.Linq;
 using App.Metrics.Reporting;
 using App.Metrics.Reporting.Abstractions;
 using App.Metrics.Tagging;
-using FormattingConstants = App.Metrics.Extensions.Reporting.Graphite.Constants;
+using FormattingConstants = App.Metrics.Formatting.Graphite.Constants;
 
-namespace App.Metrics.Extensions.Reporting.Graphite.Client
+namespace App.Metrics.Formatting.Graphite
 {
     public class GraphitePayloadBuilder : IMetricPayloadBuilder<GraphitePayload>
     {

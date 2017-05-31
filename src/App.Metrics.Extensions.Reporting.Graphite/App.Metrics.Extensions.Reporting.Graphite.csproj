@@ -36,4 +36,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\App.Metrics.Formatting.Graphite\App.Metrics.Formatting.Graphite.csproj" />
+  </ItemGroup>
+
 </Project>

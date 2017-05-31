@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using App.Metrics.Extensions.Reporting.Graphite;
 using App.Metrics.Extensions.Reporting.Graphite.Client;
+using App.Metrics.Formatting.Graphite;
 using Microsoft.Extensions.Logging;
 
 // ReSharper disable CheckNamespace

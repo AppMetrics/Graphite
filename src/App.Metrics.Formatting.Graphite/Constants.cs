@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using App.Metrics.Reporting;
 
-namespace App.Metrics.Extensions.Reporting.Graphite
+namespace App.Metrics.Formatting.Graphite
 {
     public static class Constants
     {
@@ -105,7 +105,7 @@ namespace App.Metrics.Extensions.Reporting.Graphite
                                                                                                     { MeterValueDataKeys.Rate15M, "Rate-15-Min" }
                                                                                                 };
 
-            public static readonly Func<string, string, string> MetricNameFormatter = (metricContext, metricName) => metricContext.IsMissing()
+            public static readonly Func<string, string, string> MetricNameFormatter = (metricContext, metricName) => string.IsNullOrWhiteSpace(metricContext)
                 ? $"{metricName}".Replace(' ', '_').Replace('.', '_')
                 : $"{metricContext}.{metricName.Replace(' ', '_').Replace('.', '_')}".Replace(' ', '_');
         }

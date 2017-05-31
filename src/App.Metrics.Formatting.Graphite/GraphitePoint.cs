@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using App.Metrics.Tagging;
 
-namespace App.Metrics.Extensions.Reporting.Graphite.Client
+namespace App.Metrics.Formatting.Graphite
 {
     public class GraphitePoint
     {
@@ -101,7 +101,7 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Client
                 metricType = tagsDictionary["mtype"];
             }
 
-            if (metricType.IsPresent())
+            if (!string.IsNullOrWhiteSpace(metricType))
             {
                 if (sb.Length > 0)
                 {
@@ -113,15 +113,17 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Client
 
             sb.Append(GraphiteSyntax.EscapeName(Measurement));
 
-            var tags = Tags.ToDictionary(GraphiteSyntax.EscapeTagValue).Where(tag => tag.Key != "app" && tag.Key != "env" && tag.Key != "server" && tag.Key != "mtype");
+            var tags = Tags.ToDictionary(GraphiteSyntax.EscapeTagValue).Where(
+                tag => tag.Key != "app" &&
+                       tag.Key != "env" &&
+                       tag.Key != "server" &&
+                       tag.Key != "mtype" &&
+                       tag.Key != "unit" &&
+                       tag.Key != "unit_rate" &&
+                       tag.Key != "unit_dur");
 
             foreach (var tag in tags)
             {
-                if (tag.Key == "unit" || tag.Key == "unit_rate" || tag.Key == "unit_dur")
-                {
-                    continue;
-                }
-
                 sb.Append('.');
                 sb.Append(GraphiteSyntax.EscapeName(tag.Key));
                 sb.Append('.');

@@ -68,10 +68,10 @@ namespace App.Metrics.Graphite.Sandbox
             reportFilter.WithHealthChecks(false);
 
             services.AddMetrics(Configuration.GetSection("AppMetrics")).
-                     AddJsonMetricsSerialization().
+                     AddGraphiteMetricsTextSerialization().
+                     AddGraphiteMetricsSerialization().
                      AddAsciiEnvironmentInfoSerialization().
                      AddAsciiHealthSerialization().
-                     AddAsciiMetricsTextSerialization().
                      AddReporting(
                          factory =>
                          {
