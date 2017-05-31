@@ -127,8 +127,7 @@ Task("Build")
     .IsDependentOn("Restore")
     .Does(() =>
 {	
-	// var settings = new DotNetCoreBuildSettings  { Configuration = configuration, VersionSuffix = versionSuffix };
-	var settings = new DotNetCoreBuildSettings  { Configuration = configuration };
+	var settings = new DotNetCoreBuildSettings  { Configuration = configuration, VersionSuffix = versionSuffix };	
 
 	// Context.Information("Building using preReleaseSuffix: " + preReleaseSuffix);
 	// Context.Information("Building using versionSuffix: " + versionSuffix);
