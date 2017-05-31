@@ -137,10 +137,6 @@ Task("Build")
 	{
 		settings.ArgumentCustomization = args=>args.Append("/t:Restore /p:RestoreSources=" + @"""C:\Program Files (x86)\Microsoft SDKs\NuGetPackages\""" + ";https://api.nuget.org/v3/index.json;https://www.myget.org/F/alhardy/api/v3/index.json;");
 	}
-	else
-	{
-		settings.ArgumentCustomization = args=>args.Append("/t:Restore /p:RestoreSources="https://api.nuget.org/v3/index.json;https://www.myget.org/F/alhardy/api/v3/index.json;");
-	}
 
 	if (IsRunningOnWindows())
 	{
