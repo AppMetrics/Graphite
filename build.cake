@@ -61,14 +61,14 @@ var coverExcludeFilter			= "-:*.Facts";
 var excludeFromCoverage			= "*.AppMetricsExcludeFromCodeCoverage*";
 string versionSuffix			= null;
 
-// if (!string.IsNullOrEmpty(preReleaseSuffix))
-// {
-//	versionSuffix = preReleaseSuffix + "-" + buildNumber.ToString("D4");
-// }
-// else if (AppVeyor.IsRunningOnAppVeyor && !AppVeyor.Environment.Repository.Tag.IsTag)
-// {
-// 	versionSuffix = buildNumber.ToString("D4");
-// }
+if (!string.IsNullOrEmpty(preReleaseSuffix))
+{
+	versionSuffix = preReleaseSuffix + "-" + buildNumber.ToString("D4");
+}
+ else if (AppVeyor.IsRunningOnAppVeyor && !AppVeyor.Environment.Repository.Tag.IsTag)
+ {
+ 	versionSuffix = buildNumber.ToString("D4");
+ }
 
 
 //////////////////////////////////////////////////////////////////////
@@ -243,7 +243,7 @@ Task("RunTests")
 });
 
 Task("HtmlCoverageReport")    
-    .WithCriteria(() => FileExists(testOCoverageOutputFilePath) && coverWith != "None" && IsRunningOnWindows() && !skipHtmlCoverageReport)    
+    .WithCriteria(() => IsRunningOnWindows() && FileExists(testOCoverageOutputFilePath) && coverWith != "None" && !skipHtmlCoverageReport)    
     .IsDependentOn("RunTests")
     .Does(() => 
 {
