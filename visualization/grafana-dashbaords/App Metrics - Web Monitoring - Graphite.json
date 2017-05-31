@@ -60,7 +60,7 @@
   "refresh": "5s",
   "rows": [
     {
-      "collapse": true,
+      "collapse": false,
       "height": "250",
       "panels": [
         {
@@ -120,52 +120,7 @@
           },
           "targets": [
             {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "application.httprequests__transactions",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "rate1m"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "last"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "app",
-                  "operator": "=~",
-                  "value": "/^$application$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "env",
-                  "operator": "=~",
-                  "value": "/^$environment$/"
-                }
-              ],
+              "refId": "B",
               "target": "app.$application.env.$environment.server.$server.timer.Application.HttpRequests.Transactions.Rate-1-Min"
             }
           ],
@@ -319,54 +274,8 @@
           "steppedLine": false,
           "targets": [
             {
-              "alias": "",
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "application.httprequests__active",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "last"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "env",
-                  "operator": "=~",
-                  "value": "/^$environment$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "app",
-                  "operator": "=~",
-                  "value": "/^$application$/"
-                }
-              ],
-              "target": "app.$application.env.stage.server.$server.counter.Application.HttpRequests.Active.value"
+              "refId": "B",
+              "target": "app.$application.env.$environment.server.$server.counter.Application.HttpRequests.Active.value"
             }
           ],
           "thresholds": [],
@@ -707,7 +616,7 @@
                   "value": "/^$application$/"
                 }
               ],
-              "target": "aliasByMetric(app.App_Metrics_Graphite_Sandbox.env.$environment.server.$server.timer.Application.HttpRequests.Transactions.Percentile-95)"
+              "target": "aliasByMetric(app.$application.env.$environment.server.$server.timer.Application.HttpRequests.Transactions.Percentile-95)"
             },
             {
               "alias": "$col",
@@ -799,7 +708,7 @@
                   "value": "/^$application$/"
                 }
               ],
-              "target": "aliasByMetric(app.App_Metrics_Graphite_Sandbox.env.$environment.server.$server.timer.Application.HttpRequests.Transactions.Percentile-98)"
+              "target": "aliasByMetric(app.$application.env.$environment.server.$server.timer.Application.HttpRequests.Transactions.Percentile-98)"
             },
             {
               "alias": "$col",
@@ -891,7 +800,7 @@
                   "value": "/^$application$/"
                 }
               ],
-              "target": "aliasByMetric(app.App_Metrics_Graphite_Sandbox.env.$environment.server.$server.timer.Application.HttpRequests.Transactions.Percentile-99)"
+              "target": "aliasByMetric(app.$application.env.$environment.server.$server.timer.Application.HttpRequests.Transactions.Percentile-99)"
             }
           ],
           "thresholds": [],
@@ -3176,6 +3085,7 @@
       },
       {
         "current": {
+          "selected": true,
           "text": "graphitetest",
           "value": "graphitetest"
         },
@@ -3303,5 +3213,5 @@
   },
   "timezone": "browser",
   "title": "App Metrics - Web Monitoring - Graphite",
-  "version": 23
+  "version": 30
 }
