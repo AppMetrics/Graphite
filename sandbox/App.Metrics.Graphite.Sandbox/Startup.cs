@@ -67,18 +67,11 @@ namespace App.Metrics.Graphite.Sandbox
             var reportFilter = new DefaultMetricsFilter();
             reportFilter.WithHealthChecks(false);
 
-            services.AddMetrics(
-                         Configuration.GetSection("AppMetrics"),
-                         options =>
-                         {
-                             options.WithGlobalTags(
-                                 (globalTags, info) =>
-                                 {
-                                     globalTags.Add("app", info.EntryAssemblyName);
-                                     globalTags.Add("server", info.MachineName);
-                                 });
-                         }).
-                     AddJsonSerialization().
+            services.AddMetrics(Configuration.GetSection("AppMetrics")).
+                     AddJsonMetricsSerialization().
+                     AddAsciiEnvironmentInfoSerialization().
+                     AddAsciiHealthSerialization().
+                     AddAsciiMetricsTextSerialization().
                      AddReporting(
                          factory =>
                          {

@@ -3,7 +3,7 @@
 // </copyright>
 
 using System;
-using App.Metrics.Extensions.Reporting.Graphite.Client;
+using ClientConstants = App.Metrics.Extensions.Reporting.Graphite.Client.Constants;
 
 namespace App.Metrics.Extensions.Reporting.Graphite
 {
@@ -11,9 +11,9 @@ namespace App.Metrics.Extensions.Reporting.Graphite
     {
         public HttpPolicy()
         {
-            FailuresBeforeBackoff = Constants.DefaultFailuresBeforeBackoff;
-            BackoffPeriod = Constants.DefaultBackoffPeriod;
-            Timeout = Constants.DefaultTimeout;
+            FailuresBeforeBackoff = ClientConstants.DefaultFailuresBeforeBackoff;
+            BackoffPeriod = ClientConstants.DefaultBackoffPeriod;
+            Timeout = ClientConstants.DefaultTimeout;
         }
 
         public TimeSpan BackoffPeriod { get; set; }

@@ -3,7 +3,6 @@
 // </copyright>
 
 using System;
-using System.Collections.Generic;
 using App.Metrics.Abstractions.Reporting;
 using App.Metrics.Extensions.Reporting.Graphite.Client;
 using App.Metrics.Reporting;
@@ -20,63 +19,7 @@ namespace App.Metrics.Extensions.Reporting.Graphite
         public GraphiteReporterSettings()
         {
             GraphiteSettings = new GraphiteSettings();
-
-            var customCounterDataKeys = new Dictionary<CounterValueDataKeys, string>
-                                        {
-                                            { CounterValueDataKeys.Total, "Total" },
-                                            { CounterValueDataKeys.MetricSetItemSuffix, "-SetItem" },
-                                            { CounterValueDataKeys.SetItemPercent, "Percent" }
-                                        };
-
-            var customHistogramDataKeys = new Dictionary<HistogramValueDataKeys, string>
-                                          {
-                                              { HistogramValueDataKeys.Count, "Count" },
-                                              { HistogramValueDataKeys.UserLastValue, "User-Last" },
-                                              { HistogramValueDataKeys.UserMinValue, "User-Min" },
-                                              { HistogramValueDataKeys.UserMaxValue, "User-Max" },
-                                              { HistogramValueDataKeys.LastValue, "Last" },
-                                              { HistogramValueDataKeys.Min, "Min" },
-                                              { HistogramValueDataKeys.Max, "Max" },
-                                              { HistogramValueDataKeys.Mean, "Mean" },
-                                              { HistogramValueDataKeys.Median, "Median" },
-                                              { HistogramValueDataKeys.P75, "Percentile-75" },
-                                              { HistogramValueDataKeys.P95, "Percentile-95" },
-                                              { HistogramValueDataKeys.P98, "Percentile-98" },
-                                              { HistogramValueDataKeys.P99, "Percentile-99" },
-                                              { HistogramValueDataKeys.P999, "Percentile-999" },
-                                              { HistogramValueDataKeys.Samples, "Samples" },
-                                              { HistogramValueDataKeys.StdDev, "StdDev" },
-                                              { HistogramValueDataKeys.Sum, "Sum" }
-                                          };
-
-            var customMeterDataKeys = new Dictionary<MeterValueDataKeys, string>
-                                      {
-                                          { MeterValueDataKeys.Count, "Total" },
-                                          { MeterValueDataKeys.RateMean, "Rate-Mean" },
-                                          { MeterValueDataKeys.SetItemPercent, "Percent" },
-                                          { MeterValueDataKeys.MetricSetItemSuffix, "-SetItem" },
-                                          { MeterValueDataKeys.Rate1M, "Rate-1-Min" },
-                                          { MeterValueDataKeys.Rate5M, "Rate-5-Min" },
-                                          { MeterValueDataKeys.Rate15M, "Rate-15-Min" }
-                                      };
-
-            var customApdexKeys = new Dictionary<ApdexValueDataKeys, string>
-                                  {
-                                      { ApdexValueDataKeys.Frustrating, "Frustrating" },
-                                      { ApdexValueDataKeys.Samples, "Samples" },
-                                      { ApdexValueDataKeys.Satisfied, "Satisfied" },
-                                      { ApdexValueDataKeys.Score, "Score" },
-                                      { ApdexValueDataKeys.Tolerating, "Tolerating" }
-                                  };
-
-            DataKeys = new MetricValueDataKeys(histogram: customHistogramDataKeys, meter: customMeterDataKeys, counter: customCounterDataKeys, apdex: customApdexKeys);
-
-            HttpPolicy = new HttpPolicy
-                         {
-                             FailuresBeforeBackoff = Constants.DefaultFailuresBeforeBackoff,
-                             BackoffPeriod = Constants.DefaultBackoffPeriod,
-                             Timeout = Constants.DefaultTimeout
-                         };
+            HttpPolicy = new HttpPolicy();
             ReportInterval = TimeSpan.FromSeconds(5);
             MetricNameFormatter = (metricContext, metricName) => metricContext.IsMissing()
                 ? $"{metricName}".Replace(' ', '_').Replace('.', '_')

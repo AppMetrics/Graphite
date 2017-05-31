@@ -36,7 +36,7 @@ namespace App.Metrics.Extensions.Reporting.Graphite
                 loggerFactory,
                 _settings.GraphiteSettings,
                 _settings.HttpPolicy);
-            var payloadBuilder = new GraphitePayloadBuilder();
+            var payloadBuilder = new GraphitePayloadBuilder(_settings.MetricNameFormatter, _settings.DataKeys);
 
             return new ReportRunner<GraphitePayload>(
                 async p =>
@@ -47,9 +47,7 @@ namespace App.Metrics.Extensions.Reporting.Graphite
                 payloadBuilder,
                 _settings.ReportInterval,
                 name,
-                loggerFactory,
-                _settings.MetricNameFormatter,
-                _settings.DataKeys);
+                loggerFactory);
         }
     }
 }

@@ -117,6 +117,11 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Client
 
             foreach (var tag in tags)
             {
+                if (tag.Key == "unit" || tag.Key == "unit_rate" || tag.Key == "unit_dur")
+                {
+                    continue;
+                }
+
                 sb.Append('.');
                 sb.Append(GraphiteSyntax.EscapeName(tag.Key));
                 sb.Append('.');
