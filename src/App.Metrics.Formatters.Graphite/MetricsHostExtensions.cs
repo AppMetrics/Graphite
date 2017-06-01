@@ -41,7 +41,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="host">The metrics host builder.</param>
         /// <returns>The metrics host builder</returns>
-        public static IMetricsHostBuilder AddGraphitSerialization(this IMetricsHostBuilder host)
+        public static IMetricsHostBuilder AddGraphiteSerialization(this IMetricsHostBuilder host)
         {
             host.AddGraphiteMetricsSerialization();
             host.AddGraphiteMetricsTextSerialization();
