@@ -139,7 +139,7 @@ Task("Build")
 	}
 	else
 	{
-		settings.ArgumentCustomization = args=>args.Append("/t:Restore /p:RestoreSources="https://api.nuget.org/v3/index.json;https://www.myget.org/F/alhardy/api/v3/index.json;");
+		settings.ArgumentCustomization = args=>args.Append("/t:Restore /p:RestoreSources=https://api.nuget.org/v3/index.json;https://www.myget.org/F/alhardy/api/v3/index.json;");
 	}
 
 	if (IsRunningOnWindows())
