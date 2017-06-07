@@ -3,6 +3,7 @@
 
 using System;
 using App.Metrics.Extensions.Reporting.Graphite.Client;
+using App.Metrics.Formatting.Graphite;
 using FluentAssertions;
 using Xunit;
 

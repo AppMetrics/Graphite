@@ -2,30 +2,17 @@
 <!--EXTERNAL_PROPERTIES: DefineConstants-->
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="..\..\build\common.props" />
+
+
   <PropertyGroup>
     <Description>Provides Graphite reporting capability to App Metrics</Description>
-    <Copyright>Allan Hardy 2016</Copyright>
     <AssemblyTitle>App.Metrics.Extensions.Reporting.Graphite</AssemblyTitle>
-    <Authors>Allan Hardy</Authors>
     <TargetFrameworks>netstandard1.6</TargetFrameworks>
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>App.Metrics.Extensions.Reporting.Graphite</AssemblyName>
     <PackageId>App.Metrics.Extensions.Reporting.Graphite</PackageId>
     <PackageTags>Metrics;Monitoring;Instrumentation;Reporting;Graphite</PackageTags>
-    <PackageIconUrl>http://app-metrics.io/logo.png</PackageIconUrl>
-    <PackageProjectUrl>http://app-metrics.io/reporting/graphite.html</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/alhardy/AppMetrics.Extensions.Graphite/blob/master/LICENSE</PackageLicenseUrl>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>git://github.com/alhardy/AppMetrics.Extensions.Graphite</RepositoryUrl>    
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
-    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
-    <CodeAnalysisRuleSet>..\..\AppMetrics.ruleset</CodeAnalysisRuleSet>
-    <DebugType>full</DebugType>
-    <VersionPrefix>1.1.0</VersionPrefix>
+    <VersionPrefix>1.2.0</VersionPrefix>
     <RootNamespace>App.Metrics.Extensions.Reporting.Graphite</RootNamespace>
   </PropertyGroup>
 
@@ -42,11 +29,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="App.Metrics" Version="1.1.0" />
-    <PackageReference Include="App.Metrics.Concurrency" Version="1.1.0" />
+    <PackageReference Include="App.Metrics" Version="1.2.0" />
+    <PackageReference Include="App.Metrics.Concurrency" Version="1.2.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.0">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\App.Metrics.Formatting.Graphite\App.Metrics.Formatting.Graphite.csproj" />
   </ItemGroup>
 
 </Project>

@@ -6,6 +6,7 @@ using System;
 using App.Metrics.Abstractions.Filtering;
 using App.Metrics.Abstractions.Reporting;
 using App.Metrics.Extensions.Reporting.Graphite.Client;
+using App.Metrics.Formatting.Graphite;
 using App.Metrics.Internal;
 using App.Metrics.Reporting;
 using Microsoft.Extensions.Logging;
@@ -36,7 +37,7 @@ namespace App.Metrics.Extensions.Reporting.Graphite
                 loggerFactory,
                 _settings.GraphiteSettings,
                 _settings.HttpPolicy);
-            var payloadBuilder = new GraphitePayloadBuilder();
+            var payloadBuilder = new GraphitePayloadBuilder(_settings.MetricNameFormatter, _settings.DataKeys);
 
             return new ReportRunner<GraphitePayload>(
                 async p =>
@@ -47,9 +48,7 @@ namespace App.Metrics.Extensions.Reporting.Graphite
                 payloadBuilder,
                 _settings.ReportInterval,
                 name,
-                loggerFactory,
-                _settings.MetricNameFormatter,
-                _settings.DataKeys);
+                loggerFactory);
         }
     }
 }

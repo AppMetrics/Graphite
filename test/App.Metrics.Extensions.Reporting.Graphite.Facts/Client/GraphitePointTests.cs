@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using App.Metrics.Extensions.Reporting.Graphite.Client;
+using App.Metrics.Formatting.Graphite;
 using App.Metrics.Tagging;
 using FluentAssertions;
 using Xunit;

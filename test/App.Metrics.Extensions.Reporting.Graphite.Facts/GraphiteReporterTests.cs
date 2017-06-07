@@ -10,6 +10,7 @@ using App.Metrics.Apdex;
 using App.Metrics.Core;
 using App.Metrics.Counter;
 using App.Metrics.Extensions.Reporting.Graphite.Client;
+using App.Metrics.Formatting.Graphite;
 using App.Metrics.Gauge;
 using App.Metrics.Histogram;
 using App.Metrics.Infrastructure;
@@ -32,6 +33,7 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts
         private readonly IReservoir _defaultReservoir = new DefaultForwardDecayingReservoir();
         private readonly MetricTags _tags = new MetricTags(new[] { "host", "env" }, new[] { "server1", "staging" });
         private static readonly DateTime Origin = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        private readonly GraphiteReporterSettings _settings = new GraphiteReporterSettings();
 
         [Fact]
         public void can_clear_payload()
@@ -47,7 +49,7 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts
                 Unit.None,
                 TimeUnit.Milliseconds,
                 MetricTags.Empty);
-            var payloadBuilder = new GraphitePayloadBuilder();
+            var payloadBuilder = new GraphitePayloadBuilder(_settings.MetricNameFormatter, _settings.DataKeys);
             var reporter = CreateReporter(payloadBuilder);
 
             reporter.StartReportRun(metricsMock.Object);
@@ -73,7 +75,7 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts
                 ConstantValue.Provider(gauge.Value),
                 MetricTags.Empty,
                 false);
-            var payloadBuilder = new GraphitePayloadBuilder(Origin);
+            var payloadBuilder = new GraphitePayloadBuilder(_settings.MetricNameFormatter, _settings.DataKeys, Origin);
             var reporter = CreateReporter(payloadBuilder);
 
             reporter.StartReportRun(metricsMock.Object);
@@ -93,7 +95,8 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts
                 ConstantValue.Provider(gauge.Value),
                 _tags,
                 resetOnReporting: false);
-            var payloadBuilder = new GraphitePayloadBuilder(Origin);
+            var payloadBuilder = new GraphitePayloadBuilder(_settings.MetricNameFormatter, _settings.DataKeys, Origin);
+
             var reporter = CreateReporter(payloadBuilder);
 
             reporter.StartReportRun(metricsMock.Object);
@@ -115,7 +118,8 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts
                 ConstantValue.Provider(gauge.Value),
                 new MetricTags(new[] { "key1", "key2" }, new[] { "value1", "value2" }),
                 false);
-            var payloadBuilder = new GraphitePayloadBuilder(Origin);
+            var payloadBuilder = new GraphitePayloadBuilder(_settings.MetricNameFormatter, _settings.DataKeys, Origin);
+
             var reporter = CreateReporter(payloadBuilder);
 
             reporter.StartReportRun(metricsMock.Object);
@@ -137,7 +141,8 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts
                 ConstantValue.Provider(gauge.Value),
                 MetricTags.Concat(_tags, new MetricTags("anothertag", "thevalue")),
                 resetOnReporting: false);
-            var payloadBuilder = new GraphitePayloadBuilder(Origin);
+            var payloadBuilder = new GraphitePayloadBuilder(_settings.MetricNameFormatter, _settings.DataKeys, Origin);
+
             var reporter = CreateReporter(payloadBuilder);
 
             reporter.StartReportRun(metricsMock.Object);
@@ -161,7 +166,8 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts
                 ConstantValue.Provider(counter.Value),
                 Unit.None,
                 MetricTags.Empty);
-            var payloadBuilder = new GraphitePayloadBuilder(Origin);
+            var payloadBuilder = new GraphitePayloadBuilder(_settings.MetricNameFormatter, _settings.DataKeys, Origin);
+
             var reporter = CreateReporter(payloadBuilder);
 
             reporter.StartReportRun(metricsMock.Object);
@@ -185,7 +191,8 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts
                 ConstantValue.Provider(counter.Value),
                 Unit.None,
                 new MetricTags(new[] { "key1", "key2" }, new[] { "value1", "value2" }));
-            var payloadBuilder = new GraphitePayloadBuilder(Origin);
+            var payloadBuilder = new GraphitePayloadBuilder(_settings.MetricNameFormatter, _settings.DataKeys, Origin);
+
             var reporter = CreateReporter(payloadBuilder);
 
             reporter.StartReportRun(metricsMock.Object);
@@ -210,7 +217,8 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts
                 ConstantValue.Provider(counter.Value),
                 Unit.None,
                 MetricTags.Concat(_tags, counterTags));
-            var payloadBuilder = new GraphitePayloadBuilder(Origin);
+            var payloadBuilder = new GraphitePayloadBuilder(_settings.MetricNameFormatter, _settings.DataKeys, Origin);
+
             var reporter = CreateReporter(payloadBuilder);
 
             reporter.StartReportRun(metricsMock.Object);
@@ -235,7 +243,8 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts
                 Unit.None,
                 MetricTags.Empty,
                 reportItemPercentages: false);
-            var payloadBuilder = new GraphitePayloadBuilder(Origin);
+            var payloadBuilder = new GraphitePayloadBuilder(_settings.MetricNameFormatter, _settings.DataKeys, Origin);
+
             var reporter = CreateReporter(payloadBuilder);
 
             reporter.StartReportRun(metricsMock.Object);
@@ -258,7 +267,8 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts
                 ConstantValue.Provider(counter.Value),
                 Unit.None,
                 MetricTags.Empty);
-            var payloadBuilder = new GraphitePayloadBuilder(Origin);
+            var payloadBuilder = new GraphitePayloadBuilder(_settings.MetricNameFormatter, _settings.DataKeys, Origin);
+
             var reporter = CreateReporter(payloadBuilder);
 
             reporter.StartReportRun(metricsMock.Object);
@@ -278,7 +288,8 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts
                 ConstantValue.Provider(counter.Value),
                 Unit.None,
                 _tags);
-            var payloadBuilder = new GraphitePayloadBuilder(Origin);
+            var payloadBuilder = new GraphitePayloadBuilder(_settings.MetricNameFormatter, _settings.DataKeys, Origin);
+
             var reporter = CreateReporter(payloadBuilder);
 
             reporter.StartReportRun(metricsMock.Object);
@@ -297,7 +308,8 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts
                 ConstantValue.Provider(gauge.Value),
                 Unit.None,
                 MetricTags.Empty);
-            var payloadBuilder = new GraphitePayloadBuilder(Origin);
+            var payloadBuilder = new GraphitePayloadBuilder(_settings.MetricNameFormatter, _settings.DataKeys, Origin);
+
             var reporter = CreateReporter(payloadBuilder);
 
             reporter.StartReportRun(metricsMock.Object);
@@ -316,7 +328,8 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts
                 ConstantValue.Provider(gauge.Value),
                 Unit.None,
                 _tags);
-            var payloadBuilder = new GraphitePayloadBuilder(Origin);
+            var payloadBuilder = new GraphitePayloadBuilder(_settings.MetricNameFormatter, _settings.DataKeys, Origin);
+
             var reporter = CreateReporter(payloadBuilder);
 
             reporter.StartReportRun(metricsMock.Object);
@@ -336,7 +349,8 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts
                 ConstantValue.Provider(histogram.Value),
                 Unit.None,
                 MetricTags.Empty);
-            var payloadBuilder = new GraphitePayloadBuilder(Origin);
+            var payloadBuilder = new GraphitePayloadBuilder(_settings.MetricNameFormatter, _settings.DataKeys, Origin);
+
             var reporter = CreateReporter(payloadBuilder);
 
             reporter.StartReportRun(metricsMock.Object);
@@ -359,7 +373,8 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts
                 ConstantValue.Provider(histogram.Value),
                 Unit.None,
                 _tags);
-            var payloadBuilder = new GraphitePayloadBuilder(Origin);
+            var payloadBuilder = new GraphitePayloadBuilder(_settings.MetricNameFormatter, _settings.DataKeys, Origin);
+
             var reporter = CreateReporter(payloadBuilder);
 
             reporter.StartReportRun(metricsMock.Object);
@@ -384,7 +399,8 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts
                 Unit.None,
                 TimeUnit.Milliseconds,
                 MetricTags.Empty);
-            var payloadBuilder = new GraphitePayloadBuilder(Origin);
+            var payloadBuilder = new GraphitePayloadBuilder(_settings.MetricNameFormatter, _settings.DataKeys, Origin);
+
             var reporter = CreateReporter(payloadBuilder);
 
             reporter.StartReportRun(metricsMock.Object);
@@ -406,7 +422,8 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts
                 Unit.None,
                 TimeUnit.Milliseconds,
                 _tags);
-            var payloadBuilder = new GraphitePayloadBuilder(Origin);
+            var payloadBuilder = new GraphitePayloadBuilder(_settings.MetricNameFormatter, _settings.DataKeys, Origin);
+
             var reporter = CreateReporter(payloadBuilder);
 
             reporter.StartReportRun(metricsMock.Object);
@@ -431,7 +448,8 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts
                 Unit.None,
                 TimeUnit.Milliseconds,
                 MetricTags.Empty);
-            var payloadBuilder = new GraphitePayloadBuilder(Origin);
+            var payloadBuilder = new GraphitePayloadBuilder(_settings.MetricNameFormatter, _settings.DataKeys, Origin);
+
             var reporter = CreateReporter(payloadBuilder);
 
             reporter.StartReportRun(metricsMock.Object);
@@ -457,7 +475,8 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts
                 Unit.None,
                 TimeUnit.Milliseconds,
                 _tags);
-            var payloadBuilder = new GraphitePayloadBuilder(Origin);
+            var payloadBuilder = new GraphitePayloadBuilder(_settings.MetricNameFormatter, _settings.DataKeys, Origin);
+
             var reporter = CreateReporter(payloadBuilder);
 
             reporter.StartReportRun(metricsMock.Object);
@@ -483,7 +502,8 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts
                 TimeUnit.Milliseconds,
                 TimeUnit.Milliseconds,
                 MetricTags.Empty);
-            var payloadBuilder = new GraphitePayloadBuilder(Origin);
+            var payloadBuilder = new GraphitePayloadBuilder(_settings.MetricNameFormatter, _settings.DataKeys, Origin);
+
             var reporter = CreateReporter(payloadBuilder);
 
             reporter.StartReportRun(metricsMock.Object);
@@ -509,7 +529,8 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts
                 TimeUnit.Milliseconds,
                 TimeUnit.Milliseconds,
                 _tags);
-            var payloadBuilder = new GraphitePayloadBuilder(Origin);
+            var payloadBuilder = new GraphitePayloadBuilder(_settings.MetricNameFormatter, _settings.DataKeys, Origin);
+
             var reporter = CreateReporter(payloadBuilder);
 
             reporter.StartReportRun(metricsMock.Object);
@@ -550,16 +571,13 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts
         {
             var reportInterval = TimeSpan.FromSeconds(1);
             var loggerFactory = new LoggerFactory();
-            var settings = new GraphiteReporterSettings();
 
             return new ReportRunner<GraphitePayload>(
                 p => Task.FromResult(true),
                 payloadBuilder,
                 reportInterval,
                 "Graphite Reporter",
-                loggerFactory,
-                settings.MetricNameFormatter,
-                settings.DataKeys);
+                loggerFactory);
         }
     }
 }

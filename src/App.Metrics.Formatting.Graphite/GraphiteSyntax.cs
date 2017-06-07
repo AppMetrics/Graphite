@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace App.Metrics.Extensions.Reporting.Graphite.Client
+namespace App.Metrics.Formatting.Graphite
 {
     internal class GraphiteSyntax
     {

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using App.Metrics.Formatting.Graphite;
 using Microsoft.Extensions.Logging;
 
 namespace App.Metrics.Extensions.Reporting.Graphite.Client

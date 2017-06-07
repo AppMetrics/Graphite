@@ -48,6 +48,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Metrics.Extensions.Repo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Metrics.Extensions.Reporting.Graphite", "src\App.Metrics.Extensions.Reporting.Graphite\App.Metrics.Extensions.Reporting.Graphite.csproj", "{29032D39-CDCB-410A-8ABF-3B76DF05B87A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{ACF00B7F-5725-4382-A694-8CE2E6F35566}"
+	ProjectSection(SolutionItems) = preProject
+		build\common.props = build\common.props
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Metrics.Formatters.Graphite", "src\App.Metrics.Formatters.Graphite\App.Metrics.Formatters.Graphite.csproj", "{82BE33A9-C052-49A7-9A71-8278AA9DB614}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Metrics.Formatting.Graphite", "src\App.Metrics.Formatting.Graphite\App.Metrics.Formatting.Graphite.csproj", "{7C62070B-9DC9-4ED1-B5FB-80089D23B7E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,6 +75,14 @@ Global
 		{29032D39-CDCB-410A-8ABF-3B76DF05B87A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29032D39-CDCB-410A-8ABF-3B76DF05B87A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29032D39-CDCB-410A-8ABF-3B76DF05B87A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82BE33A9-C052-49A7-9A71-8278AA9DB614}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82BE33A9-C052-49A7-9A71-8278AA9DB614}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82BE33A9-C052-49A7-9A71-8278AA9DB614}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82BE33A9-C052-49A7-9A71-8278AA9DB614}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C62070B-9DC9-4ED1-B5FB-80089D23B7E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C62070B-9DC9-4ED1-B5FB-80089D23B7E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C62070B-9DC9-4ED1-B5FB-80089D23B7E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C62070B-9DC9-4ED1-B5FB-80089D23B7E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,5 +95,8 @@ Global
 		{98118E99-F1DF-4648-A6B6-BC94155908E4} = {70127293-B35A-4C1C-846F-75B26D0D2E73}
 		{98F2B0A3-B4C1-4FBB-BF3B-B1C312C5638B} = {DD2E4647-7125-4CE3-9BA5-B45A26113A31}
 		{29032D39-CDCB-410A-8ABF-3B76DF05B87A} = {2D805782-756E-4C98-B22E-F502BEE95318}
+		{ACF00B7F-5725-4382-A694-8CE2E6F35566} = {31A4DDB1-952E-4EED-96EF-29C669279A86}
+		{82BE33A9-C052-49A7-9A71-8278AA9DB614} = {2D805782-756E-4C98-B22E-F502BEE95318}
+		{7C62070B-9DC9-4ED1-B5FB-80089D23B7E6} = {2D805782-756E-4C98-B22E-F502BEE95318}
 	EndGlobalSection
 EndGlobal
