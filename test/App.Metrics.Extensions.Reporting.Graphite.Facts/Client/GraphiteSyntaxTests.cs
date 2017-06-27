@@ -19,7 +19,7 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts.Client
         [InlineData("te st", "te_st")]
         [InlineData("te,st", "te_st")]
         [InlineData("te.st", "te.st")]
-        public void can_escape_name(string nameOrKey, string expected) { GraphiteSyntax.EscapeName(nameOrKey).Should().Be(expected); }
+        public void can_escape_name(string nameOrKey, string expected) { GraphiteSyntax.EscapeName(nameOrKey, true).Should().Be(expected); }
 
         [Fact]
         public void can_format_timespan()

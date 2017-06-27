@@ -21,9 +21,6 @@ namespace App.Metrics.Extensions.Reporting.Graphite
             GraphiteSettings = new GraphiteSettings();
             HttpPolicy = new HttpPolicy();
             ReportInterval = TimeSpan.FromSeconds(5);
-            MetricNameFormatter = (metricContext, metricName) => metricContext.IsMissing()
-                ? $"{metricName}".Replace(' ', '_').Replace('.', '_')
-                : $"{metricContext}.{metricName.Replace(' ', '_').Replace('.', '_')}".Replace(' ', '_');
         }
 
         /// <inheritdoc />
@@ -46,19 +43,6 @@ namespace App.Metrics.Extensions.Reporting.Graphite
         ///     The HTTP policy.
         /// </value>
         public HttpPolicy HttpPolicy { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the metric name formatter func which takes the metric context and name and returns a formatted string
-        ///     which will be reported to influx as the measurement
-        /// </summary>
-        /// <value>
-        ///     The metric name formatter.
-        /// </value>
-        // ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
-        // ReSharper disable MemberCanBePrivate.Global
-        public Func<string, string, string> MetricNameFormatter { get; set; }
-        // ReSharper restore MemberCanBePrivate.Global
-        // ReSharper restore AutoPropertyCanBeMadeGetOnly.Global
 
         /// <summary>
         ///     Gets or sets the report interval for which to flush metrics to Graphite.

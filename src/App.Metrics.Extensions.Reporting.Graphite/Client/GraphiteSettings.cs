@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using App.Metrics.Formatting.Graphite;
 
 namespace App.Metrics.Extensions.Reporting.Graphite.Client
 {
@@ -10,9 +11,13 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Client
     public class GraphiteSettings
         // ReSharper restore InconsistentNaming
     {
-        public GraphiteSettings(Uri baseAddress) { BaseAddress = baseAddress ?? throw new ArgumentNullException(nameof(baseAddress)); }
+        public GraphiteSettings(Uri baseAddress)
+            : this()
+        {
+            BaseAddress = baseAddress ?? throw new ArgumentNullException(nameof(baseAddress));
+        }
 
-        internal GraphiteSettings() { }
+        internal GraphiteSettings(IGraphiteNameFormatter nameFormatter = null) { MetricNameFormatter = nameFormatter ?? new DefaultGraphiteNameFormatter(); }
 
         /// <summary>
         ///     Gets the Graphite host.
@@ -41,23 +46,31 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Client
         {
             get
             {
-                if (BaseAddress.Scheme.ToLowerInvariant() == "net.tcp")
+                switch (BaseAddress.Scheme.ToLowerInvariant())
                 {
-                    return Protocol.Tcp;
+                    case "net.tcp":
+                        return Protocol.Tcp;
+                    case "net.udp":
+                        return Protocol.Udp;
+                    case "net.pickled":
+                        return Protocol.Pickled;
+                    default:
+                        throw new ArgumentException("Graphite URI scheme must be either net.tcp or net.udp or net.pickled", nameof(BaseAddress));
                 }
-
-                if (BaseAddress.Scheme.ToLowerInvariant() == "net.udp")
-                {
-                    return Protocol.Udp;
-                }
-
-                if (BaseAddress.Scheme.ToLowerInvariant() == "net.pickled")
-                {
-                    return Protocol.Pickled;
-                }
-
-                throw new ArgumentException("Graphite URI scheme must be either net.tcp or net.udp or net.pickled", nameof(BaseAddress));
             }
         }
+
+        /// <summary>
+        ///     Gets or sets the metric name formatter func which takes the metric context and name and returns a formatted string
+        ///     which will be reported to influx as the measurement
+        /// </summary>
+        /// <value>
+        ///     The metric name formatter.
+        /// </value>
+        // ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
+        // ReSharper disable MemberCanBePrivate.Global
+        public IGraphiteNameFormatter MetricNameFormatter { get; set; }
+        // ReSharper restore MemberCanBePrivate.Global
+        // ReSharper restore AutoPropertyCanBeMadeGetOnly.Global
     }
 }
