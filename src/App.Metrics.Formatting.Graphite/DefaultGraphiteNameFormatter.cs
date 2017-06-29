@@ -62,11 +62,11 @@ namespace App.Metrics.Formatting.Graphite
 
             if (!point.Context.IsMissing())
             {
-                sb.Append(GraphiteSyntax.EscapeName(point.Context));
+                sb.Append(GraphiteSyntax.EscapeName(point.Context, true));
                 sb.Append(".");
             }
 
-            sb.Append(GraphiteSyntax.EscapeName(point.Name));
+            sb.Append(GraphiteSyntax.EscapeName(point.Name, true));
 
             var tags = tagsDictionary.Where(tag => !ExcludeTags.Contains(tag.Key));
 
