@@ -2,38 +2,28 @@
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 
+using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace App.Metrics.Formatting.Graphite
 {
-    public class GraphitePayload
+    public class GraphitePayload : List<GraphitePoint>
     {
-        internal List<GraphitePoint> Points { get; } = new List<GraphitePoint>();
+        public GraphitePayload() { }
 
-        public void Add(GraphitePoint point)
+        private GraphitePayload(IEnumerable<GraphitePoint> other)
+            : base(other) { }
+
+        public IEnumerable<GraphitePayload> ToBatches(int batchSize)
         {
-            if (point == null)
+            if (batchSize <= 0)
             {
-                return;
+                throw new ArgumentException("must be greater than zero", nameof(batchSize));
             }
 
-            Points.Add(point);
-        }
-
-        public void Format(TextWriter textWriter)
-        {
-            if (textWriter == null)
+            for (var i = 0; i < this.Count; i += batchSize)
             {
-                return;
-            }
-
-            var points = Points.ToList();
-
-            foreach (var point in points)
-            {
-                point.Format(textWriter);
+                yield return new GraphitePayload(this.GetRange(i, Math.Min(this.Count - i, batchSize)));
             }
         }
     }

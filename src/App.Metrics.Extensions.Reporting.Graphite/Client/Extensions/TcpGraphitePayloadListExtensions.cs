@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using App.Metrics.Extensions.Reporting.Graphite;
 using App.Metrics.Extensions.Reporting.Graphite.Client;
 using App.Metrics.Formatting.Graphite;
+using App.Metrics.Formatting.Graphite.Extensions;
 using Microsoft.Extensions.Logging;
 
 // ReSharper disable CheckNamespace
@@ -34,9 +35,7 @@ namespace System.Collections.Generic
 
                         foreach (var batch in batches)
                         {
-                            var payloadText = new StringWriter();
-                            batch.Format(payloadText);
-                            var text = payloadText.ToString();
+                            var text = batch.Format(graphiteSettings.MetricNameFormatter);
 
                             logger.LogDebug(text);
 

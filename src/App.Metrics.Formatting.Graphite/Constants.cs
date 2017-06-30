@@ -2,7 +2,6 @@
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 
-using System;
 using System.Collections.Generic;
 using App.Metrics.Reporting;
 
@@ -105,9 +104,7 @@ namespace App.Metrics.Formatting.Graphite
                                                                                                     { MeterValueDataKeys.Rate15M, "Rate-15-Min" }
                                                                                                 };
 
-            public static readonly Func<string, string, string> MetricNameFormatter = (metricContext, metricName) => string.IsNullOrWhiteSpace(metricContext)
-                ? $"{metricName}".Replace(' ', '_').Replace('.', '_')
-                : $"{metricContext}.{metricName.Replace(' ', '_').Replace('.', '_')}".Replace(' ', '_');
+            public static readonly IGraphiteNameFormatter MetricNameFormatter = new DefaultGraphiteNameFormatter();
         }
     }
 }

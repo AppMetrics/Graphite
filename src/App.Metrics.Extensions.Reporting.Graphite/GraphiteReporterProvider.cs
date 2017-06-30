@@ -37,7 +37,7 @@ namespace App.Metrics.Extensions.Reporting.Graphite
                 loggerFactory,
                 _settings.GraphiteSettings,
                 _settings.HttpPolicy);
-            var payloadBuilder = new GraphitePayloadBuilder(_settings.MetricNameFormatter, _settings.DataKeys);
+            var payloadBuilder = new GraphitePayloadBuilder(_settings.GraphiteSettings.MetricNameFormatter, _settings.DataKeys);
 
             return new ReportRunner<GraphitePayload>(
                 async p =>

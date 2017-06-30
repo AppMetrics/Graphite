@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using App.Metrics.Extensions.Reporting.Graphite.Client;
 using App.Metrics.Formatting.Graphite;
+using App.Metrics.Formatting.Graphite.Extensions;
 using App.Metrics.Tagging;
 using FluentAssertions;
 using Xunit;
@@ -17,11 +18,11 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts.Client
         [Fact]
         public void can_format_payload()
         {
-            var textWriter = new StringWriter();
+            var nameFormatter = new DefaultGraphiteNameFormatter();
             var payload = new GraphitePayload();
             var fieldsOne = new Dictionary<string, object> { { "key", "value" } };
             var timestampOne = new DateTime(2017, 1, 1, 1, 1, 1, DateTimeKind.Utc);
-            var pointOne = new GraphitePoint("measurement", fieldsOne, MetricTags.Empty, timestampOne);
+            var pointOne = new GraphitePoint(null, "measurement", fieldsOne, MetricTags.Empty, timestampOne);
 
             var fieldsTwo = new Dictionary<string, object>
                             {
@@ -30,26 +31,14 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts.Client
                                 { "field3key", false }
                             };
             var timestampTwo = new DateTime(2017, 1, 2, 1, 1, 1, DateTimeKind.Utc);
-            var pointTwo = new GraphitePoint("measurement", fieldsTwo, MetricTags.Empty, timestampTwo);
+            var pointTwo = new GraphitePoint(null, "measurement", fieldsTwo, MetricTags.Empty, timestampTwo);
 
             payload.Add(pointOne);
             payload.Add(pointTwo);
 
-            payload.Format(textWriter);
-
-            textWriter.ToString().Should()
+            payload.Format(nameFormatter).Should()
                       .Be(
                           "measurement.key value 1483232461\nmeasurement.field1key field1value 1483318861\nmeasurement.field2key 2 1483318861\nmeasurement.field3key f 1483318861\n");
-        }
-
-        [Fact]
-        public void when_null_point_ignore_and_dont_throw()
-        {
-            var payload = new GraphitePayload();
-
-            Action action = () => { payload.Add(null); };
-
-            action.ShouldNotThrow();
         }
 
         [Fact]
@@ -57,7 +46,7 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts.Client
         {
             var payload = new GraphitePayload();
             var fields = new Dictionary<string, object> { { "key", "value" } };
-            var pointOne = new GraphitePoint("measurement", fields, MetricTags.Empty);
+            var pointOne = new GraphitePoint(null, "measurement", fields, MetricTags.Empty);
 
             Action action = () =>
             {

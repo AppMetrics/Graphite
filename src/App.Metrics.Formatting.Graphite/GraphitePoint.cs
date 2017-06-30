@@ -4,149 +4,55 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 using App.Metrics.Tagging;
 
 namespace App.Metrics.Formatting.Graphite
 {
-    public class GraphitePoint
+    public struct GraphitePoint
     {
-        private readonly object _syncLock = new object();
-
         public GraphitePoint(
-            string measurement,
+            string context,
+            string name,
             IReadOnlyDictionary<string, object> fields,
             MetricTags tags,
             DateTime? utcTimestamp = null)
         {
-            if (string.IsNullOrEmpty(measurement))
+            if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentException("A measurement name must be specified");
+                throw new ArgumentException("A name must be specified", nameof(name));
             }
 
             if (fields == null || fields.Count == 0)
             {
-                throw new ArgumentException("At least one field must be specified");
+                throw new ArgumentException("At least one field must be specified", nameof(fields));
             }
 
             if (fields.Any(f => string.IsNullOrEmpty(f.Key)))
             {
-                throw new ArgumentException("Fields must have non-empty names");
+                throw new ArgumentException("Fields must have non-empty names", nameof(fields));
             }
 
             if (utcTimestamp != null && utcTimestamp.Value.Kind != DateTimeKind.Utc)
             {
-                throw new ArgumentException("Timestamps must be specified as UTC");
+                throw new ArgumentException("Timestamps must be specified as UTC", nameof(utcTimestamp));
             }
 
-            Measurement = measurement;
+            Context = context;
+            Name = name;
             Fields = fields;
             Tags = tags;
-            UtcTimestamp = utcTimestamp;
+            UtcTimestamp = utcTimestamp ?? DateTime.UtcNow;
         }
+
+        public string Context { get; }
 
         public IReadOnlyDictionary<string, object> Fields { get; }
 
-        public string Measurement { get; }
+        public string Name { get; }
 
         public MetricTags Tags { get; }
 
-        public DateTime? UtcTimestamp { get; private set; }
-
-        public void Format(TextWriter textWriter)
-        {
-            if (textWriter == null)
-            {
-                throw new ArgumentNullException(nameof(textWriter));
-            }
-
-            var sb = new StringBuilder();
-
-            var tagsDictionary = Tags.ToDictionary(GraphiteSyntax.EscapeTagValue);
-
-            if (tagsDictionary.ContainsKey("app"))
-            {
-                sb.Append("app.");
-                sb.Append(tagsDictionary["app"]);
-            }
-
-            if (tagsDictionary.ContainsKey("env"))
-            {
-                if (sb.Length > 0)
-                {
-                    sb.Append('.');
-                }
-
-                sb.Append("env.");
-                sb.Append(tagsDictionary["env"]);
-            }
-
-            if (tagsDictionary.ContainsKey("server"))
-            {
-                if (sb.Length > 0)
-                {
-                    sb.Append('.');
-                }
-
-                sb.Append("server.");
-                sb.Append(tagsDictionary["server"]);
-            }
-
-            var metricType = string.Empty;
-
-            if (tagsDictionary.ContainsKey("mtype"))
-            {
-                metricType = tagsDictionary["mtype"];
-            }
-
-            if (!string.IsNullOrWhiteSpace(metricType))
-            {
-                if (sb.Length > 0)
-                {
-                    sb.Append('.');
-                }
-
-                sb.Append($"{metricType}.");
-            }
-
-            sb.Append(GraphiteSyntax.EscapeName(Measurement));
-
-            var tags = Tags.ToDictionary(GraphiteSyntax.EscapeTagValue).Where(
-                tag => tag.Key != "app" &&
-                       tag.Key != "env" &&
-                       tag.Key != "server" &&
-                       tag.Key != "mtype" &&
-                       tag.Key != "unit" &&
-                       tag.Key != "unit_rate" &&
-                       tag.Key != "unit_dur");
-
-            foreach (var tag in tags)
-            {
-                sb.Append('.');
-                sb.Append(GraphiteSyntax.EscapeName(tag.Key));
-                sb.Append('.');
-                sb.Append(GraphiteSyntax.EscapeTagValue(tag.Value));
-            }
-
-            foreach (var f in Fields)
-            {
-                textWriter.Write(sb.ToString());
-                textWriter.Write('.');
-                textWriter.Write(GraphiteSyntax.EscapeName(f.Key).Replace('.', '_'));
-                textWriter.Write(' ');
-                textWriter.Write(GraphiteSyntax.FormatValue(f.Value));
-
-                if (UtcTimestamp == null)
-                {
-                    UtcTimestamp = DateTime.UtcNow;
-                }
-
-                textWriter.Write(' ');
-                textWriter.Write(GraphiteSyntax.FormatTimestamp(UtcTimestamp.Value));
-                textWriter.Write('\n');
-            }
-        }
+        public DateTime UtcTimestamp { get; }
     }
 }
