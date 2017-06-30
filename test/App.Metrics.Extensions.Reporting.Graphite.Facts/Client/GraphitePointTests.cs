@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using App.Metrics.Extensions.Reporting.Graphite.Client;
 using App.Metrics.Formatting.Graphite;
+using App.Metrics.Formatting.Graphite.Extensions;
 using App.Metrics.Tagging;
 using FluentAssertions;
 using Xunit;
@@ -20,7 +21,7 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts.Client
             var fields = new Dictionary<string, object>();
             Action action = () =>
             {
-                var point = new GraphitePoint("measurement", fields, MetricTags.Empty);
+                var point = new GraphitePoint(null, "measurement", fields, MetricTags.Empty);
             };
 
             action.ShouldThrow<ArgumentException>();
@@ -29,20 +30,20 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts.Client
         [Fact]
         public void can_format_payload_correctly()
         {
-            var textWriter = new StringWriter();
+            var nameFormatter = new DefaultGraphiteNameFormatter();
             var fields = new Dictionary<string, object> { { "key", "value" } };
             var timestamp = new DateTime(2017, 1, 1, 1, 1, 1, DateTimeKind.Utc);
-            var point = new GraphitePoint("measurement", fields, MetricTags.Empty, timestamp);
+            var point = new GraphitePoint(null, "measurement", fields, MetricTags.Empty, timestamp);
 
-            point.Format(textWriter);
+            var paload = new GraphitePayload { point };
 
-            textWriter.ToString().Should().Be("measurement.key value 1483232461\n");
+            paload.Format(nameFormatter).Should().Be("measurement.key value 1483232461\n");
         }       
 
         [Fact]
         public void can_format_payload_with_multiple_fields_correctly()
         {
-            var textWriter = new StringWriter();
+            var nameFormatter = new DefaultGraphiteNameFormatter();
             var fields = new Dictionary<string, object>
                          {
                              { "field1key", "field1value" },
@@ -50,26 +51,26 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts.Client
                              { "field3key", false }
                          };
             var timestamp = new DateTime(2017, 1, 1, 1, 1, 1, DateTimeKind.Utc);
-            var point = new GraphitePoint("measurement", fields, MetricTags.Empty, timestamp);
+            var point = new GraphitePoint(null, "measurement", fields, MetricTags.Empty, timestamp);
 
-            point.Format(textWriter);
+            var paload = new GraphitePayload { point };
 
-            textWriter.ToString().Should()
+            paload.Format(nameFormatter).Should()
                       .Be("measurement.field1key field1value 1483232461\nmeasurement.field2key 2 1483232461\nmeasurement.field3key f 1483232461\n");
         }
 
         [Fact]
         public void can_format_payload_with_tags_correctly()
         {
-            var textWriter = new StringWriter();
+            var nameFormatter = new DefaultGraphiteNameFormatter();
             var fields = new Dictionary<string, object> { { "key", "value" } };
             var tags = new MetricTags("tagkey", "tagvalue");
             var timestamp = new DateTime(2017, 1, 1, 1, 1, 1, DateTimeKind.Utc);
-            var point = new GraphitePoint("measurement", fields, tags, timestamp);
+            var point = new GraphitePoint(null, "measurement", fields, tags, timestamp);
 
-            point.Format(textWriter);
+            var paload = new GraphitePayload { point };
 
-            textWriter.ToString().Should().Be("measurement.tagkey.tagvalue.key value 1483232461\n");
+            paload.Format(nameFormatter).Should().Be("measurement.tagkey.tagvalue.key value 1483232461\n");
         }
 
         [Fact]
@@ -78,7 +79,7 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts.Client
             var fields = new Dictionary<string, object> { { string.Empty, "value" } };
             Action action = () =>
             {
-                var point = new GraphitePoint("measurement", fields, MetricTags.Empty);
+                var point = new GraphitePoint(null, "measurement", fields, MetricTags.Empty);
             };
 
             action.ShouldThrow<ArgumentException>();
@@ -90,7 +91,7 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts.Client
             var fields = new Dictionary<string, object> { { "key", "value" } };
             Action action = () =>
             {
-                var point = new GraphitePoint(string.Empty, fields, MetricTags.Empty);
+                var point = new GraphitePoint(null, string.Empty, fields, MetricTags.Empty);
             };
 
             action.ShouldThrow<ArgumentException>();
@@ -107,7 +108,7 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts.Client
 
             Action action = () =>
             {
-                var point = new GraphitePoint("measurement", fields, MetricTags.Empty, timestamp);
+                var point = new GraphitePoint(null, "measurement", fields, MetricTags.Empty, timestamp);
             };
 
             if (!expected)

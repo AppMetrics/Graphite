@@ -17,7 +17,7 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts.Client
         {
             Action action = () =>
             {
-                var settings = new GraphiteSettings(null);
+                var settings = new GraphiteSettings((Uri)null);
             };
 
             action.ShouldThrow<ArgumentNullException>();

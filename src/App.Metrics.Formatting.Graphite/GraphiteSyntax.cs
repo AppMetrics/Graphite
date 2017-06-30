@@ -13,6 +13,7 @@ namespace App.Metrics.Formatting.Graphite
     {
         private const RegexOptions RegexOptions = System.Text.RegularExpressions.RegexOptions.CultureInvariant | System.Text.RegularExpressions.RegexOptions.Compiled;
         private static readonly Regex InvalidAllowDotsRegex = new Regex(@"[^a-zA-Z0-9\-%&.]+", RegexOptions);
+        private static readonly Regex InvalidRegex = new Regex(@"[^a-zA-Z0-9\-%&]+", RegexOptions);
 
         private static readonly DateTime Origin = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
@@ -33,17 +34,18 @@ namespace App.Metrics.Formatting.Graphite
                                                                                         { typeof(TimeSpan), FormatTimespan }
                                                                                     };
 
-        public static string EscapeName(string nameOrKey)
+        public static string EscapeName(string nameOrKey) => EscapeName(nameOrKey, false);
+
+        public static string EscapeName(string nameOrKey, bool allowDots)
         {
             if (nameOrKey == null)
             {
                 throw new ArgumentNullException(nameof(nameOrKey));
             }
 
-            return InvalidAllowDotsRegex.Replace(nameOrKey, "_");
+            var regex = allowDots ? InvalidAllowDotsRegex : InvalidRegex;
+            return regex.Replace(nameOrKey, "_");
         }
-
-        public static string EscapeTagValue(string value) { return EscapeName(value).Replace('.', '_').Replace(' ', '_'); }
 
         public static string FormatTimestamp(DateTime utcTimestamp)
         {

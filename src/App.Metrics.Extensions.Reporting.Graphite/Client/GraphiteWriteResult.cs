@@ -21,5 +21,7 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Client
         public string ErrorMessage { get; }
 
         public bool Success { get; }
+
+        public static readonly GraphiteWriteResult SuccessResult = new GraphiteWriteResult(true);
     }
 }

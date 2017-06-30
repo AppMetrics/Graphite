@@ -4,8 +4,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using App.Metrics.Formatting.Graphite.Extensions;
 using App.Metrics.Reporting;
 using App.Metrics.Reporting.Abstractions;
 using App.Metrics.Tagging;
@@ -15,12 +15,12 @@ namespace App.Metrics.Formatting.Graphite
 {
     public class GraphitePayloadBuilder : IMetricPayloadBuilder<GraphitePayload>
     {
-        private readonly Func<string, string, string> _metricNameFormatter;
+        private readonly IGraphiteNameFormatter _metricNameFormatter;
         private readonly DateTime? _timestamp;
         private GraphitePayload _payload;
 
         public GraphitePayloadBuilder(
-            Func<string, string, string> metricNameFormatter = null,
+            IGraphiteNameFormatter metricNameFormatter = null,
             MetricValueDataKeys dataKeys = null,
             DateTime? timestamp = null)
         {
@@ -43,8 +43,7 @@ namespace App.Metrics.Formatting.Graphite
 
         public void Pack(string context, string name, object value, MetricTags tags)
         {
-            var measurement = _metricNameFormatter(context, name);
-            _payload?.Add(new GraphitePoint(measurement, new Dictionary<string, object> { { "value", value } }, tags, _timestamp));
+            _payload?.Add(new GraphitePoint(context, name, new Dictionary<string, object> { { "value", value } }, tags, _timestamp));
         }
 
         public void Pack(
@@ -56,18 +55,14 @@ namespace App.Metrics.Formatting.Graphite
         {
             var fields = columns.Zip(values, (column, data) => new { column, data }).ToDictionary(pair => pair.column, pair => pair.data);
 
-            var measurement = _metricNameFormatter(context, name);
-
-            _payload?.Add(new GraphitePoint(measurement, fields, tags, _timestamp));
+            _payload?.Add(new GraphitePoint(context, name, fields, tags, _timestamp));
         }
 
         public GraphitePayload Payload() { return _payload; }
 
         public string PayloadFormatted()
         {
-            var result = new StringWriter();
-            _payload.Format(result);
-            return result.ToString();
+            return _payload.Format(_metricNameFormatter);
         }
     }
 }

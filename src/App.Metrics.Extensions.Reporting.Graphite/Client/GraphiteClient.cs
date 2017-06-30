@@ -62,30 +62,25 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Client
                 return new GraphiteWriteResult(false, "Too many failures in writing to Graphite, Circuit Opened");
             }
 
-            var batchedPayloads = new GraphteBatchedPayload(payload, _graphiteSettings.BatchSize);
-
             try
             {
-                var batches = batchedPayloads.GetBatches().ToList();
+                var batches = payload.ToBatches(_graphiteSettings.BatchSize).ToList();
 
-                if (_graphiteSettings.Protocol == Protocol.Tcp)
+                switch (_graphiteSettings.Protocol)
                 {
-                    await batches.TcpWriteAsync(_graphiteSettings, _httpPolicy, _logger, cancellationToken);
-                    return new GraphiteWriteResult(true);
+                    case Protocol.Tcp:
+                        await batches.TcpWriteAsync(_graphiteSettings, _httpPolicy, _logger, cancellationToken);
+                        break;
+                    case Protocol.Udp:
+                        await batches.UdpWriteAsync(_graphiteSettings, _httpPolicy, _logger, cancellationToken);
+                        break;
+                    case Protocol.Pickled:
+                        throw new NotImplementedException("Picked protocol not implemented, use UDP or TCP");
+                    default:
+                        throw new InvalidOperationException("Unsupported protocol, UDP, TCP and Pickled protocols are accepted");
                 }
 
-                if (_graphiteSettings.Protocol == Protocol.Udp)
-                {
-                    await batches.UdpWriteAsync(_graphiteSettings, _httpPolicy, _logger, cancellationToken);
-                    return new GraphiteWriteResult(true);
-                }
-
-                if (_graphiteSettings.Protocol == Protocol.Pickled)
-                {
-                    throw new NotImplementedException("Picked protocol not implemented, use UDP or TCP");
-                }
-
-                throw new InvalidOperationException("Unsupported protocol, UDP, TCP and Pickled protocols are accepted");
+                return GraphiteWriteResult.SuccessResult;
             }
             catch (Exception ex)
             {
