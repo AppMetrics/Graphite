@@ -1,22 +1,22 @@
-# App Metrics Graphite Extensions <img src="http://app-metrics.io/logo.png" alt="App Metrics" width="50px"/> 
-[![Official Site](https://img.shields.io/badge/site-appmetrics-blue.svg?style=flat-square)](http://app-metrics.io/reporting/graphite.html) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square)](https://opensource.org/licenses/Apache-2.0)
+# App Metrics Graphite <img src="http://app-metrics.io/logo.png" alt="App Metrics" width="50px"/> 
+[![Official Site](https://img.shields.io/badge/site-appmetrics-blue.svg?style=flat-square)](http://app-metrics.io/reporting/influxdb.html) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square)](https://opensource.org/licenses/Apache-2.0)
 
 ## What is it?
 
-The repo contains Graphite extension packages to [App Metrics](https://github.com/alhardy/AppMetrics).
+This repo contains Graphite extension packages to [App Metrics](https://github.com/alhardy/AppMetrics).
 
 ## Latest Builds, Packages & Repo Stats
 
 |Branch|AppVeyor|Travis|Coverage|
 |------|:--------:|:--------:|:--------:|
-|dev|[![AppVeyor](https://img.shields.io/appveyor/ci/alhardy/appmetrics-extensions-graphite/dev.svg?style=flat-square&label=appveyor%20build)](https://ci.appveyor.com/project/alhardy/appmetrics-extensions-graphite/branch/dev)|[![Travis](https://img.shields.io/travis/alhardy/AppMetrics.Extensions.Graphite/dev.svg?style=flat-square&label=travis%20build)](https://travis-ci.org/alhardy/AppMetrics.Extensions.Graphite)|[![Coveralls](https://img.shields.io/coveralls/alhardy/AppMetrics.Extensions.Graphite/dev.svg?style=flat-square)](https://coveralls.io/github/alhardy/AppMetrics.Extensions.Graphite?branch=dev)
-|master|[![AppVeyor](https://img.shields.io/appveyor/ci/alhardy/appmetrics-extensions-graphite/master.svg?style=flat-square&label=appveyor%20build)](https://ci.appveyor.com/project/alhardy/appmetrics-extensions-graphite/branch/master)| [![Travis](https://img.shields.io/travis/alhardy/AppMetrics.Extensions.Graphite/master.svg?style=flat-square&label=travis%20build)](https://travis-ci.org/alhardy/AppMetrics.Extensions.Graphite)| [![Coveralls](https://img.shields.io/coveralls/alhardy/AppMetrics.Extensions.Graphite/master.svg?style=flat-square)](https://coveralls.io/github/alhardy/AppMetrics.Extensions.Graphite?branch=master)|
+|dev|[![AppVeyor](https://img.shields.io/appveyor/ci/alhardy/graphite/dev.svg?style=flat-square&label=appveyor%20build)](https://ci.appveyor.com/project/alhardy/appmetrics-extensions-graphite/branch/dev)|[![Travis](https://img.shields.io/travis/alhardy/AppMetrics.Extensions.Graphite/dev.svg?style=flat-square&label=travis%20build)](https://travis-ci.org/alhardy/AppMetrics.Extensions.Graphite)|[![Coveralls](https://img.shields.io/coveralls/alhardy/AppMetrics.Extensions.Graphite/dev.svg?style=flat-square)](https://coveralls.io/github/alhardy/AppMetrics.Extensions.Graphite?branch=dev)
+|master|[![AppVeyor](https://img.shields.io/appveyor/ci/alhardy/graphite/master.svg?style=flat-square&label=appveyor%20build)](https://ci.appveyor.com/project/alhardy/appmetrics-extensions-graphite/branch/master)| [![Travis](https://img.shields.io/travis/alhardy/AppMetrics.Extensions.Graphite/master.svg?style=flat-square&label=travis%20build)](https://travis-ci.org/alhardy/AppMetrics.Extensions.Graphite)| [![Coveralls](https://img.shields.io/coveralls/alhardy/AppMetrics.Extensions.Graphite/master.svg?style=flat-square)](https://coveralls.io/github/alhardy/AppMetrics.Extensions.Graphite?branch=master)|
 
-|Package|Dev Release|Pre-Release|Release|
+|Package|Dev Release|PreRelease|Latest Release|
 |------|:--------:|:--------:|:--------:|
-|App.Metrics.Extensions.Reporting.Graphite|[![MyGet Status](https://img.shields.io/myget/alhardy/v/App.Metrics.Extensions.Reporting.Graphite.svg?style=flat-square)](https://www.myget.org/feed/alhardy/package/nuget/App.Metrics.Extensions.Reporting.Graphite)|[![NuGet Status](https://img.shields.io/nuget/vpre/App.Metrics.Extensions.Reporting.Graphite.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.Extensions.Reporting.Graphite/)|[![NuGet Status](https://img.shields.io/nuget/v/App.Metrics.Extensions.Reporting.Graphite.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.Extensions.Reporting.Graphite/)
-|App.Metrics.Formatters.Graphite|[![MyGet Status](https://img.shields.io/myget/alhardy/v/App.Metrics.Formatters.Graphite.svg?style=flat-square)](https://www.myget.org/feed/alhardy/package/nuget/App.Metrics.Formatters.Graphite)|[![NuGet Status](https://img.shields.io/nuget/vpre/App.Metrics.Formatters.Graphite.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.Formatters.Graphite/)|[![NuGet Status](https://img.shields.io/nuget/v/App.Metrics.Formatters.Graphite.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.Formatters.Graphite/)
-|App.Metrics.Formatting.Graphite|[![MyGet Status](https://img.shields.io/myget/alhardy/v/App.Metrics.Formatting.Graphite.svg?style=flat-square)](https://www.myget.org/feed/alhardy/package/nuget/App.Metrics.Formatting.Graphite)|[![NuGet Status](https://img.shields.io/nuget/vpre/App.Metrics.Formatting.Graphite.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.Formatting.Graphite/)|[![NuGet Status](https://img.shields.io/nuget/v/App.Metrics.Formatting.Graphite.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.Formatting.Graphite/)
+|App.Metrics.Reporting.Graphite|[![MyGet Status](https://img.shields.io/myget/appmetrics/v/App.Metrics.Reporting.Graphite.svg?style=flat-square)](https://www.myget.org/feed/appmetrics/package/nuget/App.Metrics.Reporting.Graphite)|[![NuGet Status](https://img.shields.io/nuget/vpre/App.Metrics.Reporting.Graphite.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.Reporting.Graphite/)|[![NuGet Status](https://img.shields.io/nuget/v/App.Metrics.Reporting.Graphite.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.Reporting.Graphite/)
+|App.Metrics.AspNetCore.Formatters.Graphite|[![MyGet Status](https://img.shields.io/myget/appmetrics/v/App.Metrics.AspNetCore.Formatters.Graphite.svg?style=flat-square)](https://www.myget.org/feed/appmetrics/package/nuget/App.Metrics.AspNetCore.Formatters.InfluxDB)|[![NuGet Status](https://img.shields.io/nuget/vpre/App.Metrics.AspNetCore.Formatters.Graphite.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.AspNetCore.Formatters.InfluxDB/)|[![NuGet Status](https://img.shields.io/nuget/v/App.Metrics.AspNetCore.Formatters.Graphite.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.AspNetCore.Formatters.Graphite/)
+|App.Metrics.Formatters.Graphite|[![MyGet Status](https://img.shields.io/myget/appmetrics/v/App.Metrics.Formatters.Graphite.svg?style=flat-square)](https://www.myget.org/feed/appmetrics/package/nuget/App.Metrics.Formatters.Graphite)|[![NuGet Status](https://img.shields.io/nuget/vpre/App.Metrics.Formatters.Graphite.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.Formatters.Graphite/)|[![NuGet Status](https://img.shields.io/nuget/v/App.Metrics.Formatters.Graphite.svg?style=flat-square)](https://www.nuget.org/packages/App.Metrics.Formatters.Graphite/)
 
 #### Grafana/Graphite Web Monitoring
 
@@ -40,7 +40,7 @@ The repo contains Graphite extension packages to [App Metrics](https://github.co
 
 ## How to build
 
-[AppVeyor](https://ci.appveyor.com/project/alhardy/appmetrics-extensions-graphite/branch/master) and [Travis CI](https://travis-ci.org/alhardy/AppMetrics.Extensions.Graphite) builds are triggered on commits and PRs to `dev` and `master` branches.
+[AppVeyor](https://ci.appveyor.com/project/alhardy/graphite/branch/master) and [Travis CI](https://travis-ci.org/alhardy/Graphite) builds are triggered on commits and PRs to `dev` and `master` branches.
 
 See the following for build arguments and running locally.
 
@@ -80,11 +80,6 @@ Run `build.sh` from the repositories root directory. Code Coverage reports are n
 ```
 	.\build.sh --ScriptArgs '-BuildConfiguration=Release -PreReleaseSuffix=beta -BuildNumber=1'
 ```
-
-> #### Nuget Packages
-> Nuget packages won't be generated on non-windows environments by default.
-> 
-> Unfortunately there is [currently no way out-of-the-box to conditionally build & pack a project by framework](https://github.com/dotnet/roslyn-project-system/issues/1586#issuecomment-280978851). Because `App.Metrics` packages target `.NET 4.5.2` as well as `dotnet standard` there is a work around in the build script to force `dotnet standard` on build but no work around for packaging on non-windows environments. 
 
 ## Contributing
 

@@ -1,11 +1,13 @@
 version: 1.0.{build}
-image: Visual Studio 2017
+image: Visual Studio 2017 Preview
 environment:
   COVERALLS_REPO_TOKEN:
-    secure: ib5FPsslWC/6i1wuOCCWFPLdw56JUhDQ8YsyQpCeskh9FswTXybgkQSGTxkrDLwp
+    secure: nWdAI6sjy0Jy0VXMi+mxLTgrF9y9lznv4ZuTbKjr/rUzBK/a/MonktMfW6UI/VvD
   PreReleaseSuffix: alpha
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   DOTNET_CLI_TELEMETRY_OPTOUT: true
+  CoverWith: OpenCover
+  PreReleaseSuffix: alpha
   GitUser:
     secure: zAdAOUUof3XGDsdOBRYg7J7wZS44iL4VjI/MVGw+JnU=
   GitOwner:
@@ -18,14 +20,17 @@ test: off
 artifacts:
 - path: artifacts/packages/*.nupkg
 - path: artifacts/coverage/*.xml
-- path: artifacts/test-results/*.xml
+- path: artifacts/test-results/*.trx
 - path: artifacts/resharper-reports/*.xml
 - path: artifacts/resharper-reports/*.html
 - path: artifacts/coverage/coverage.dcvr
-- path: artifacts/test-results/*.trx
 deploy:
 - provider: NuGet
-  server: https://www.myget.org/F/alhardy/api/v2/package
+  server: https://www.myget.org/F/appmetrics/api/v2/package
   api_key:
     secure: gIAiACgNj+JzXyLLTe3rLxZyrAB9RpC8Lw81xEjdOLXqotprqEwGiFWRipEqkpps
   skip_symbols: true
+  symbol_server: https://www.myget.org/F/appmetrics/symbol
+skip_commits:
+  files:    
+    - '**/*.md'
