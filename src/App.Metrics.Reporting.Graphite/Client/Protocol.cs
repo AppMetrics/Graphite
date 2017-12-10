@@ -2,7 +2,7 @@
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 
-namespace App.Metrics.Extensions.Reporting.Graphite.Client
+namespace App.Metrics.Reporting.Graphite.Client
 {
     public enum Protocol
     {

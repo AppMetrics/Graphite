@@ -4,14 +4,12 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using App.Metrics.Formatting.Graphite;
+using App.Metrics.Formatters.Graphite;
 
-namespace App.Metrics.Extensions.Reporting.Graphite.Client
+namespace App.Metrics.Reporting.Graphite.Client
 {
     public interface IGraphiteClient
     {
-        Task<GraphiteWriteResult> WriteAsync(
-            GraphitePayload payload,
-            CancellationToken cancellationToken = default(CancellationToken));
+        Task<GraphiteWriteResult> WriteAsync(string payload, CancellationToken cancellationToken);
     }
 }

@@ -6,13 +6,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using App.Metrics.Tagging;
 
-namespace App.Metrics.Formatting.Graphite
+namespace App.Metrics.Formatters.Graphite
 {
     public class DefaultGraphiteNameFormatter : IGraphiteNameFormatter
     {
         private static readonly HashSet<string> ExcludeTags = new HashSet<string> { "app", "env", "server", "mtype", "unit", "unit_rate", "unit_dur" };
+        private readonly string _prefix;
+
+        public DefaultGraphiteNameFormatter()
+            : this(null)
+        {
+        }
+
+        public DefaultGraphiteNameFormatter(string prefix)
+        {
+            _prefix = prefix;
+        }
 
         /// <inheritdoc />
         public IEnumerable<string> Format(GraphitePoint point)
@@ -21,8 +31,18 @@ namespace App.Metrics.Formatting.Graphite
 
             var tagsDictionary = point.Tags.ToDictionary(GraphiteSyntax.EscapeName);
 
+            if (!string.IsNullOrEmpty(_prefix))
+            {
+                sb.Append($"{_prefix}");
+            }
+
             if (tagsDictionary.TryGetValue("app", out var appValue))
             {
+                if (sb.Length > 0)
+                {
+                    sb.Append('.');
+                }
+
                 sb.Append("app.");
                 sb.Append(appValue);
             }
@@ -68,16 +88,6 @@ namespace App.Metrics.Formatting.Graphite
 
             sb.Append(GraphiteSyntax.EscapeName(point.Name, true));
 
-            var tags = tagsDictionary.Where(tag => !ExcludeTags.Contains(tag.Key));
-
-            foreach (var tag in tags)
-            {
-                sb.Append('.');
-                sb.Append(GraphiteSyntax.EscapeName(tag.Key));
-                sb.Append('.');
-                sb.Append(tag.Value);
-            }
-
             sb.Append('.');
             var prefix = sb.ToString();
 
@@ -85,6 +95,16 @@ namespace App.Metrics.Formatting.Graphite
             {
                 var fieldStringBuilder = new StringBuilder(prefix);
                 fieldStringBuilder.Append(GraphiteSyntax.EscapeName(f.Key));
+
+            var tags = tagsDictionary.Where(tag => !ExcludeTags.Contains(tag.Key));
+
+            foreach (var tag in tags)
+            {
+                sb.Append(';');
+                sb.Append(GraphiteSyntax.EscapeName(tag.Key));
+                sb.Append('=');
+                sb.Append(tag.Value);
+            }
 
                 fieldStringBuilder.Append(' ');
                 fieldStringBuilder.Append(GraphiteSyntax.FormatValue(f.Value));

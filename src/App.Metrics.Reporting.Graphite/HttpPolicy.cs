@@ -3,9 +3,9 @@
 // </copyright>
 
 using System;
-using ClientConstants = App.Metrics.Extensions.Reporting.Graphite.Client.Constants;
+using ClientConstants = App.Metrics.Reporting.Graphite.Client.Constants;
 
-namespace App.Metrics.Extensions.Reporting.Graphite
+namespace App.Metrics.Reporting.Graphite
 {
     public class HttpPolicy
     {

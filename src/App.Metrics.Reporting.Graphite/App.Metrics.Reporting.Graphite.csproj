@@ -23,7 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="App.Metrics.Reporting" Version="$(AppMetricsReportingVersion)" />
+    <PackageReference Include="App.Metrics" Version="$(AppMetricsReportingVersion)" />
+    <PackageReference Include="App.Metrics.Core" Version="$(AppMetricsReportingVersion)" />
   </ItemGroup>
 
 </Project>

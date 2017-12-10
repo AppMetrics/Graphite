@@ -5,9 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using App.Metrics.Tagging;
 
-namespace App.Metrics.Formatting.Graphite
+namespace App.Metrics.Formatters.Graphite
 {
     public struct GraphitePoint
     {

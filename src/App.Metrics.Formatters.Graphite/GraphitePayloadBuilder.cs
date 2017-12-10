@@ -5,35 +5,29 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using App.Metrics.Formatting.Graphite.Extensions;
-using App.Metrics.Tagging;
-using FormattingConstants = App.Metrics.Formatting.Graphite.Constants;
+using App.Metrics.Formatters.Graphite.Extensions;
 
-namespace App.Metrics.Formatting.Graphite
+namespace App.Metrics.Formatters.Graphite
 {
-    public class GraphitePayloadBuilder : IMetricPayloadBuilder<GraphitePayload>
+    public class GraphitePayloadBuilder
     {
         private readonly IGraphiteNameFormatter _metricNameFormatter;
         private readonly DateTime? _timestamp;
         private GraphitePayload _payload;
 
-        public GraphitePayloadBuilder(
-            IGraphiteNameFormatter metricNameFormatter = null,
-            MetricValueDataKeys dataKeys = null,
-            DateTime? timestamp = null)
+        public GraphitePayloadBuilder(IGraphiteNameFormatter metricNameFormatter = null, GeneratedMetricNameMapping dataKeys = null, DateTime? timestamp = null)
         {
             _timestamp = timestamp;
             _payload = new GraphitePayload();
-            _metricNameFormatter = metricNameFormatter ?? FormattingConstants.GraphiteDefaults.MetricNameFormatter;
-            DataKeys = dataKeys ?? new MetricValueDataKeys(
-                           FormattingConstants.GraphiteDefaults.CustomHistogramDataKeys,
-                           FormattingConstants.GraphiteDefaults.CustomMeterDataKeys,
-                           FormattingConstants.GraphiteDefaults.CustomApdexKeys,
-                           FormattingConstants.GraphiteDefaults.CustomCounterDataKeys);
+            _metricNameFormatter = metricNameFormatter ?? GraphiteFormatterConstants.GraphiteDefaults.MetricNameFormatter;
+            DataKeys = dataKeys ?? new GeneratedMetricNameMapping(
+                           GraphiteFormatterConstants.GraphiteDefaults.CustomHistogramDataKeys,
+                           GraphiteFormatterConstants.GraphiteDefaults.CustomMeterDataKeys,
+                           GraphiteFormatterConstants.GraphiteDefaults.CustomApdexKeys,
+                           GraphiteFormatterConstants.GraphiteDefaults.CustomCounterDataKeys);
         }
 
-        /// <inheritdoc />
-        public MetricValueDataKeys DataKeys { get; }
+        public GeneratedMetricNameMapping DataKeys { get; }
 
         public void Clear() { _payload = null; }
 
@@ -55,8 +49,6 @@ namespace App.Metrics.Formatting.Graphite
 
             _payload?.Add(new GraphitePoint(context, name, fields, tags, _timestamp));
         }
-
-        public GraphitePayload Payload() { return _payload; }
 
         public string PayloadFormatted()
         {
