@@ -2,12 +2,12 @@
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 
+using System;
 using System.Collections.Generic;
-using App.Metrics.Reporting;
 
-namespace App.Metrics.Formatting.Graphite
+namespace App.Metrics.Formatters.Graphite
 {
-    public static class Constants
+    public static class GraphiteFormatterConstants
     {
         public class GraphiteDefaults
         {
@@ -104,7 +104,12 @@ namespace App.Metrics.Formatting.Graphite
                                                                                                     { MeterValueDataKeys.Rate15M, "Rate-15-Min" }
                                                                                                 };
 
-            public static readonly IGraphiteNameFormatter MetricNameFormatter = new DefaultGraphiteNameFormatter();
+            public static readonly DefaultGraphiteNameFormatter MetricNameFormatter = new DefaultGraphiteNameFormatter();
+
+            public static string MetricTagValueFormatter(string arg)
+            {
+                throw new System.NotImplementedException();
+            }
         }
     }
 }

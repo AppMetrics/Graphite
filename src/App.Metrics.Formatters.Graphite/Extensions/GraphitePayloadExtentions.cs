@@ -5,7 +5,7 @@
 using System.Linq;
 using System.Text;
 
-namespace App.Metrics.Formatting.Graphite.Extensions
+namespace App.Metrics.Formatters.Graphite.Extensions
 {
     public static class GraphitePayloadExtentions
     {

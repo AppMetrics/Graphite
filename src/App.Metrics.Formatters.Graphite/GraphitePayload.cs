@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace App.Metrics.Formatting.Graphite
+namespace App.Metrics.Formatters.Graphite
 {
     public class GraphitePayload : List<GraphitePoint>
     {

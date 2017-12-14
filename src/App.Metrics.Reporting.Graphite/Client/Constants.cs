@@ -4,7 +4,7 @@
 
 using System;
 
-namespace App.Metrics.Extensions.Reporting.Graphite.Client
+namespace App.Metrics.Reporting.Graphite.Client
 {
     internal static class Constants
     {
