@@ -1,5 +1,7 @@
 version: 1.0.{build}
-image: Visual Studio 2017 Preview
+image: Visual Studio 2017
+init:
+    - git config --global core.autocrlf input
 environment:
   COVERALLS_REPO_TOKEN:
     secure: nWdAI6sjy0Jy0VXMi+mxLTgrF9y9lznv4ZuTbKjr/rUzBK/a/MonktMfW6UI/VvD
@@ -30,6 +32,9 @@ deploy:
     secure: gIAiACgNj+JzXyLLTe3rLxZyrAB9RpC8Lw81xEjdOLXqotprqEwGiFWRipEqkpps
   skip_symbols: true
   symbol_server: https://www.myget.org/F/appmetrics/symbol
+install:
+  - cmd: curl -O https://download.microsoft.com/download/0/F/D/0FD852A4-7EA1-4E2A-983A-0484AC19B92C/dotnet-sdk-2.0.0-win-x64.exe
+  - cmd: dotnet-sdk-2.0.0-win-x64.exe /install /quiet /norestart /log install.log
 skip_commits:
   files:    
     - '**/*.md'
