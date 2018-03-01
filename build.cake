@@ -40,7 +40,6 @@ var linkSources					= HasArgument("LinkSources") ? Argument<bool>("LinkSources")
 var packDirs                    = new [] 
 										{ 
 											Directory("./src/App.Metrics.Reporting.Graphite"), 
-											// Directory("./src/App.Metrics.AspNetCore.Formatters.Graphite"), 
 											Directory("./src/App.Metrics.Formatters.Graphite") 
 										};
 var artifactsDir                = (DirectoryPath) Directory("./artifacts");
