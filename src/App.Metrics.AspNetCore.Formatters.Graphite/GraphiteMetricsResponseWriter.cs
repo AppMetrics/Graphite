@@ -4,8 +4,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using App.Metrics.Formatting.Graphite;
-using App.Metrics.Middleware;
+using App.Metrics.AspNetCore;
 using Microsoft.AspNetCore.Http;
 
 namespace App.Metrics.Formatters.Graphite

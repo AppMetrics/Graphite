@@ -4,12 +4,12 @@
 
 using System;
 using System.Collections.Generic;
-using App.Metrics.Formatting.Graphite;
-using App.Metrics.Formatting.Graphite.Extensions;
+using App.Metrics.Formatters.Graphite;
+using App.Metrics.Formatters.Graphite.Extensions;
 using FluentAssertions;
 using Xunit;
 
-namespace App.Metrics.Extensions.Reporting.Graphite.Facts.Client
+namespace App.Metrics.Reporting.Graphite.Facts.Client
 {
     public class GraphitePayloadTests
     {
@@ -52,7 +52,7 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts.Client
                 payload.Format(null);
             };
 
-            action.ShouldNotThrow();
+            action.Should().NotThrow();
         }
     }
 }

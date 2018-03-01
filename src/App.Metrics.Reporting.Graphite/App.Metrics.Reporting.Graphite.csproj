@@ -4,27 +4,16 @@
 
   <PropertyGroup>
     <Description>Provides Graphite reporting capability to App Metrics</Description>        
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>           
+    <TargetFrameworks>netstandard1.6</TargetFrameworks>
     <PackageTags>appmetrics;reporting;graphite</PackageTags>    
   </PropertyGroup>
-
-  <ItemGroup>
-    <AdditionalFiles Include="..\..\stylecop.json" Link="stylecop.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.0.0">
-      <PrivateAssets>All</PrivateAssets>
-    </PackageReference>    
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\App.Metrics.Formatters.Graphite\App.Metrics.Formatters.Graphite.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="App.Metrics" Version="$(AppMetricsReportingVersion)" />
-    <PackageReference Include="App.Metrics.Core" Version="$(AppMetricsReportingVersion)" />
+    <PackageReference Include="App.Metrics.Abstractions" Version="$(AppMetricsCoreVersion)" />
   </ItemGroup>
 
 </Project>

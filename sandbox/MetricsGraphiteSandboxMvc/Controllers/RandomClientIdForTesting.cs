@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 
-namespace App.Metrics.Graphite.Sandbox.JustForTesting
+namespace MetricsGraphiteSandboxMvc.Controllers
 {
     public static class RandomClientIdForTesting
     {

@@ -34,21 +34,16 @@ namespace App.Metrics.Reporting.Graphite
                 throw new InvalidOperationException($"{nameof(MetricsReportingGraphiteOptions.FlushInterval)} must not be less than zero");
             }
 
-            if (string.IsNullOrWhiteSpace(options.Graphite.Index))
-            {
-                throw new InvalidOperationException($"{nameof(MetricsReportingGraphiteOptions)} Graphite Index is required");
-            }
-
             _graphiteClient = graphiteClient ?? throw new ArgumentNullException(nameof(graphiteClient));
 
-            Formatter = options.MetricsOutputFormatter ?? new MetricsGraphiteOutputFormatter(options.Graphite.Index);
+            Formatter = options.MetricsOutputFormatter ?? new MetricsGraphiteOutputFormatter();
 
             FlushInterval = options.FlushInterval > TimeSpan.Zero
                 ? options.FlushInterval
                 : AppMetricsConstants.Reporting.DefaultFlushInterval;
 
             Filter = options.Filter;
-            Logger.Info($"Using Metrics Reporter {this}. Url: {options.Graphite.BaseAddress} Index: {options.Graphite.Index} FlushInterval: {FlushInterval}");
+            Logger.Info($"Using Metrics Reporter {this}. Url: {options.Graphite.BaseUri} FlushInterval: {FlushInterval}");
         }
 
         /// <inheritdoc />

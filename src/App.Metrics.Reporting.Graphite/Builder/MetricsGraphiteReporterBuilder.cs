@@ -1,29 +1,26 @@
-﻿// <copyright file="GraphiteReporterProvider.cs" company="Allan Hardy">
+﻿// <copyright file="MetricsGraphiteReporterBuilder.cs" company="Allan Hardy">
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 
 using System;
-using System.Net.Http;
 using App.Metrics.Builder;
 using App.Metrics.Reporting.Graphite;
 using App.Metrics.Reporting.Graphite.Client;
 
+// ReSharper disable CheckNamespace
 namespace App.Metrics
+    // ReSharper restore CheckNamespace
 {
     public static class MetricsGraphiteReporterBuilder
     {
         public static IMetricsBuilder ToGraphite(
             this IMetricsReportingBuilder metricsReportingBuilder,
-            Action<MetricsReportingGraphiteOptions> setupAction)
+            MetricsReportingGraphiteOptions options)
         {
             if (metricsReportingBuilder == null)
             {
                 throw new ArgumentNullException(nameof(metricsReportingBuilder));
             }
-
-            var options = new MetricsReportingGraphiteOptions();
-
-            setupAction?.Invoke(options);
 
             var httpClient = CreateClient(options.Graphite, options.HttpPolicy);
             var reporter = new GraphiteReporter(options, httpClient);

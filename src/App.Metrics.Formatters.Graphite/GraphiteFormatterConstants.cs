@@ -1,4 +1,4 @@
-﻿// <copyright file="Constants.cs" company="Allan Hardy">
+﻿// <copyright file="GraphiteFormatterConstants.cs" company="Allan Hardy">
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 

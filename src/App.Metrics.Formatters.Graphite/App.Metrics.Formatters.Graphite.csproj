@@ -2,12 +2,12 @@
   <Import Project="..\..\build\common.props" />
   <PropertyGroup>
     <Description>App Metrics Formatting, formatting metrics data to Graphite formats.</Description>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard1.6</TargetFrameworks>
     <PackageTags>appmetrics;graphite</PackageTags>
-    <LangVersion>latest</LangVersion>
   </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="App.Metrics" Version="$(AppMetricsReportingVersion)" />
-    <PackageReference Include="App.Metrics.Core" Version="$(AppMetricsReportingVersion)" />
+    <PackageReference Include="App.Metrics.Core" Version="$(AppMetricsCoreVersion)" />
   </ItemGroup>
+
 </Project>

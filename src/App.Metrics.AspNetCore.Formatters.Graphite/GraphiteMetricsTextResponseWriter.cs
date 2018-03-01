@@ -4,19 +4,16 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using App.Metrics.Formatting.Graphite;
-using App.Metrics.Middleware;
 using Microsoft.AspNetCore.Http;
 
 namespace App.Metrics.Formatters.Graphite
 {
     public class GraphiteMetricsTextResponseWriter : IMetricsTextResponseWriter
     {
-        /// <inheritdoc />
-        public string ContentType => "text/plain; app.metrics=vnd.app.metrics.v1.metrics.graphite; graphite=plain-text-0.10.0;";
+        public string ContentType => "text/plain";
 
         /// <inheritdoc />
-        public Task WriteAsync(HttpContext context, MetricsDataValueSource metricsData, CancellationToken token = default(CancellationToken))
+        public Task WriteAsync(HttpContext context, MetricsDataValueSource metricsData, CancellationToken token = default)
         {
             var payloadBuilder = new GraphitePayloadBuilder();
 

@@ -4,7 +4,7 @@
 
 using System;
 
-namespace App.Metrics.Graphite.Sandbox.JustForTesting
+namespace MetricsGraphiteSandboxMvc.Controllers
 {
     public class RandomBufferGenerator
     {

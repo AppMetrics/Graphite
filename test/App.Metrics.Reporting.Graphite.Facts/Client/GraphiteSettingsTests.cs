@@ -3,11 +3,11 @@
 // </copyright>
 
 using System;
-using App.Metrics.Extensions.Reporting.Graphite.Client;
+using App.Metrics.Reporting.Graphite.Client;
 using FluentAssertions;
 using Xunit;
 
-namespace App.Metrics.Extensions.Reporting.Graphite.Facts.Client
+namespace App.Metrics.Reporting.Graphite.Facts.Client
 {
     // ReSharper disable InconsistentNaming
     public class GraphiteSettingsTests
@@ -18,10 +18,10 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts.Client
         {
             Action action = () =>
             {
-                var settings = new GraphiteSettings((Uri)null);
+                var settings = new GraphiteOptions(null);
             };
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Theory]
@@ -30,7 +30,7 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts.Client
         [InlineData("net.pickled://localhost", Protocol.Pickled)]
         public void Can_determine_protocol(string address, Protocol expected)
         {
-            var settings = new GraphiteSettings(new Uri(address));
+            var settings = new GraphiteOptions(new Uri(address));
 
             settings.Protocol.Should().Be(expected);
         }

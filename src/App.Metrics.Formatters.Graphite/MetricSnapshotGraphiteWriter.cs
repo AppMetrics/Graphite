@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using App.Metrics.Serialization;
-using Newtonsoft.Json;
 
 namespace App.Metrics.Formatters.Graphite
 {
@@ -18,20 +17,13 @@ namespace App.Metrics.Formatters.Graphite
 
         public MetricSnapshotGraphiteWriter(
             TextWriter textWriter,
-            string graphiteIndex,
             IGraphiteNameFormatter metricNameFormatter = null,
             Func<string, string> metricTagValueFormatter = null,
             GeneratedMetricNameMapping dataKeys = null)
         {
-            if (string.IsNullOrWhiteSpace(graphiteIndex))
-            {
-                throw new ArgumentNullException(nameof(graphiteIndex), "The graphite index name cannot be null or whitespace");
-            }
-
             _payloadBuilder = new GraphitePayloadBuilder(metricNameFormatter);
 
             _textWriter = textWriter ?? throw new ArgumentNullException(nameof(textWriter));
-            var serializer = JsonSerializer.Create();
 
             MetricNameMapping = dataKeys ?? new GeneratedMetricNameMapping(
                                     histogram: GraphiteFormatterConstants.GraphiteDefaults.CustomHistogramDataKeys,
@@ -72,7 +64,9 @@ namespace App.Metrics.Formatters.Graphite
             if (disposing)
             {
                 _textWriter.Write(_payloadBuilder.PayloadFormatted());
+#if !NETSTANDARD1_6
                 _textWriter?.Close();
+#endif
                 _textWriter?.Dispose();
             }
         }

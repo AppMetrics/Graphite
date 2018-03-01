@@ -2,7 +2,7 @@
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 
-namespace App.Metrics.Extensions.Reporting.Graphite
+namespace App.Metrics.Reporting.Graphite
 {
     public class LoggingEvents
     {

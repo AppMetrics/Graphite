@@ -4,12 +4,12 @@
 
 using System;
 using System.Collections.Generic;
-using App.Metrics.Formatting.Graphite;
-using App.Metrics.Formatting.Graphite.Extensions;
+using App.Metrics.Formatters.Graphite;
+using App.Metrics.Formatters.Graphite.Extensions;
 using FluentAssertions;
 using Xunit;
 
-namespace App.Metrics.Extensions.Reporting.Graphite.Facts.Client
+namespace App.Metrics.Reporting.Graphite.Facts.Client
 {
     public class GraphitePointTests
     {
@@ -22,7 +22,7 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts.Client
                 var point = new GraphitePoint(null, "measurement", fields, MetricTags.Empty);
             };
 
-            action.ShouldThrow<ArgumentException>();
+            action.Should().Throw<ArgumentException>();
         }
 
         [Fact]
@@ -65,7 +65,6 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts.Client
             var tags = new MetricTags("tagkey", "tagvalue");
             var timestamp = new DateTime(2017, 1, 1, 1, 1, 1, DateTimeKind.Utc);
             var point = new GraphitePoint(null, "measurement", fields, tags, timestamp);
-
             var paload = new GraphitePayload { point };
 
             paload.Format(nameFormatter).Should().Be("measurement.tagkey.tagvalue.key value 1483232461\n");
@@ -80,7 +79,7 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts.Client
                 var point = new GraphitePoint(null, "measurement", fields, MetricTags.Empty);
             };
 
-            action.ShouldThrow<ArgumentException>();
+            action.Should().Throw<ArgumentException>();
         }
 
         [Fact]
@@ -92,7 +91,7 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts.Client
                 var point = new GraphitePoint(null, string.Empty, fields, MetricTags.Empty);
             };
 
-            action.ShouldThrow<ArgumentException>();
+            action.Should().Throw<ArgumentException>();
         }
 
         [Theory]
@@ -111,11 +110,11 @@ namespace App.Metrics.Extensions.Reporting.Graphite.Facts.Client
 
             if (!expected)
             {
-                action.ShouldThrow<ArgumentException>();
+                action.Should().Throw<ArgumentException>();
             }
             else
             {
-                action.ShouldNotThrow();
+                action.Should().NotThrow();
             }
         }
     }

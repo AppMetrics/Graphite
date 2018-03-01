@@ -1,16 +1,13 @@
-﻿// <copyright file="GraphiteClient.cs" company="Allan Hardy">
+﻿// <copyright file="DefaultGraphiteClient.cs" company="Allan Hardy">
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using App.Metrics.Formatters.Graphite;
 
 namespace App.Metrics.Reporting.Graphite.Client
 {
@@ -81,35 +78,27 @@ namespace App.Metrics.Reporting.Graphite.Client
             }
         }
 
-        private class GraphiteUdpClient
+        private bool NeedToBackoff()
         {
-            private static UdpClient _client;
-
-            public static async Task WriteAsync(
-                GraphiteOptions graphiteOptions,
-                HttpPolicy httpPolicy,
-                CancellationToken cancellationToken,
-                string text)
+            if (Interlocked.Read(ref _failureAttempts) < _failuresBeforeBackoff)
             {
-                await CreateClient(graphiteOptions, httpPolicy);
-
-                var datagram = Encoding.UTF8.GetBytes(text);
-
-                await _client.Client.SendAsync(new ArraySegment<byte>(datagram), SocketFlags.None);
+                return false;
             }
 
-            private static async Task CreateClient(
-                GraphiteOptions graphiteOptions,
-                HttpPolicy httpPolicy)
+            if (Interlocked.Read(ref _backOffTicks) == 0)
             {
-                // FIXME ED Not thread-safe
-                if (_client == null)
-                {
-                    _client = new UdpClient { Client = { SendTimeout = httpPolicy.Timeout.Milliseconds } };
-                }
-
-                await _client.Client.ConnectAsync(graphiteOptions.BaseAddress.Host, graphiteOptions.BaseAddress.Port);
+                Interlocked.Exchange(ref _backOffTicks, DateTime.UtcNow.Add(_backOffPeriod).Ticks);
             }
+
+            if (DateTime.UtcNow.Ticks <= Interlocked.Read(ref _backOffTicks))
+            {
+                return true;
+            }
+
+            Interlocked.Exchange(ref _failureAttempts, 0);
+            Interlocked.Exchange(ref _backOffTicks, 0);
+
+            return false;
         }
 
         private class GraphiteTcpClient
@@ -141,33 +130,41 @@ namespace App.Metrics.Reporting.Graphite.Client
                 HttpPolicy httpPolicy)
             {
                 var client = new TcpClient { SendTimeout = httpPolicy.Timeout.Milliseconds };
-                await client.ConnectAsync(graphiteOptions.BaseAddress.Host, graphiteOptions.BaseAddress.Port);
+                await client.ConnectAsync(graphiteOptions.BaseUri.Host, graphiteOptions.BaseUri.Port);
 
                 return client;
             }
         }
 
-        private bool NeedToBackoff()
+        private class GraphiteUdpClient
         {
-            if (Interlocked.Read(ref _failureAttempts) < _failuresBeforeBackoff)
+            private static UdpClient _client;
+
+            public static async Task WriteAsync(
+                GraphiteOptions graphiteOptions,
+                HttpPolicy httpPolicy,
+                CancellationToken cancellationToken,
+                string text)
             {
-                return false;
+                await CreateClient(graphiteOptions, httpPolicy);
+
+                var datagram = Encoding.UTF8.GetBytes(text);
+
+                await _client.Client.SendAsync(new ArraySegment<byte>(datagram), SocketFlags.None);
             }
 
-            if (Interlocked.Read(ref _backOffTicks) == 0)
+            private static async Task CreateClient(
+                GraphiteOptions graphiteOptions,
+                HttpPolicy httpPolicy)
             {
-                Interlocked.Exchange(ref _backOffTicks, DateTime.UtcNow.Add(_backOffPeriod).Ticks);
+                // TODO: FIXME ED Not thread-safe
+                if (_client == null)
+                {
+                    _client = new UdpClient { Client = { SendTimeout = httpPolicy.Timeout.Milliseconds } };
+                }
+
+                await _client.Client.ConnectAsync(graphiteOptions.BaseUri.Host, graphiteOptions.BaseUri.Port);
             }
-
-            if (DateTime.UtcNow.Ticks <= Interlocked.Read(ref _backOffTicks))
-            {
-                return true;
-            }
-
-            Interlocked.Exchange(ref _failureAttempts, 0);
-            Interlocked.Exchange(ref _backOffTicks, 0);
-
-            return false;
         }
     }
 }

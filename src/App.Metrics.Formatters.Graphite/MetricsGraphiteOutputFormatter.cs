@@ -13,17 +13,10 @@ namespace App.Metrics.Formatters.Graphite
 {
     public class MetricsGraphiteOutputFormatter : IMetricsOutputFormatter
     {
-        private readonly string _graphiteIndex;
         private readonly MetricsGraphiteDocumentFormattingOptions _options;
 
-        public MetricsGraphiteOutputFormatter(string graphiteIndex)
+        public MetricsGraphiteOutputFormatter()
         {
-            if (string.IsNullOrEmpty(graphiteIndex))
-            {
-                throw new ArgumentNullException(nameof(graphiteIndex));
-            }
-
-            _graphiteIndex = graphiteIndex;
             _options = new MetricsGraphiteDocumentFormattingOptions();
         }
 
@@ -36,7 +29,6 @@ namespace App.Metrics.Formatters.Graphite
                 throw new ArgumentNullException(nameof(graphiteIndex));
             }
 
-            _graphiteIndex = graphiteIndex;
             _options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
@@ -60,7 +52,6 @@ namespace App.Metrics.Formatters.Graphite
             {
                 using (var textWriter = new MetricSnapshotGraphiteWriter(
                     streamWriter,
-                    _graphiteIndex,
                     _options.MetricNameFormatter,
                     _options.MetricTagFormatter,
                     _options.MetricNameMapping))
