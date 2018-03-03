@@ -60,6 +60,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Metrics.Reporting.Graph
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetricsGraphiteSandboxMvc", "sandbox\MetricsGraphiteSandboxMvc\MetricsGraphiteSandboxMvc.csproj", "{E55935E2-2A57-4DD8-997E-341B0CBBA510}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetricsGraphiteSandbox", "sandbox\MetricsGraphiteSandbox\MetricsGraphiteSandbox.csproj", "{D886809F-E61C-4215-9FF6-6F73019346B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,6 +84,10 @@ Global
 		{E55935E2-2A57-4DD8-997E-341B0CBBA510}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E55935E2-2A57-4DD8-997E-341B0CBBA510}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E55935E2-2A57-4DD8-997E-341B0CBBA510}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D886809F-E61C-4215-9FF6-6F73019346B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D886809F-E61C-4215-9FF6-6F73019346B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D886809F-E61C-4215-9FF6-6F73019346B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D886809F-E61C-4215-9FF6-6F73019346B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,6 +102,7 @@ Global
 		{7C62070B-9DC9-4ED1-B5FB-80089D23B7E6} = {2D805782-756E-4C98-B22E-F502BEE95318}
 		{CA0F8731-85F7-4B7C-B846-26968EBA0FFA} = {DD2E4647-7125-4CE3-9BA5-B45A26113A31}
 		{E55935E2-2A57-4DD8-997E-341B0CBBA510} = {70127293-B35A-4C1C-846F-75B26D0D2E73}
+		{D886809F-E61C-4215-9FF6-6F73019346B9} = {70127293-B35A-4C1C-846F-75B26D0D2E73}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {532425D1-73C9-43EB-9089-E12B7077D6F0}
