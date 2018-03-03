@@ -7,7 +7,7 @@ using App.Metrics.Reporting.Graphite.Client;
 using FluentAssertions;
 using Xunit;
 
-namespace App.Metrics.Reporting.Graphite.Facts.Client
+namespace App.Metrics.Reporting.Graphite.Facts
 {
     // ReSharper disable InconsistentNaming
     public class GraphiteSettingsTests
@@ -16,11 +16,14 @@ namespace App.Metrics.Reporting.Graphite.Facts.Client
         [Fact]
         public void Base_address_cannot_be_null()
         {
+            // Arrange
             Action action = () =>
             {
+                // Act
                 var settings = new GraphiteOptions(null);
             };
 
+            // Assert
             action.Should().Throw<ArgumentNullException>();
         }
 

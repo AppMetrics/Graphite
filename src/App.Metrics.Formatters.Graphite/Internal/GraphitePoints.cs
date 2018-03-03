@@ -34,7 +34,6 @@ namespace App.Metrics.Formatters.Graphite.Internal
             foreach (var point in points)
             {
                 point.Write(textWriter, writeTimestamp);
-                textWriter.Write('\n');
             }
         }
     }

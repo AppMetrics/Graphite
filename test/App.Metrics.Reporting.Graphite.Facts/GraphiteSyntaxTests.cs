@@ -7,7 +7,7 @@ using App.Metrics.Formatters.Graphite.Internal;
 using FluentAssertions;
 using Xunit;
 
-namespace App.Metrics.Reporting.Graphite.Facts.Client
+namespace App.Metrics.Reporting.Graphite.Facts
 {
     public class GraphiteSyntaxTests
     {
