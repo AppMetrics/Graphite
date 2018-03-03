@@ -11,6 +11,5 @@ namespace App.Metrics.Reporting.Graphite.Client
         public static readonly TimeSpan DefaultBackoffPeriod = TimeSpan.FromSeconds(30);
         public static readonly int DefaultFailuresBeforeBackoff = 3;
         public static readonly TimeSpan DefaultTimeout = TimeSpan.FromSeconds(30);
-        public static readonly int DefaultBatchSize = 20;
     }
 }

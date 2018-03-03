@@ -4,22 +4,28 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
-namespace App.Metrics.Formatters.Graphite
+namespace App.Metrics.Formatters.Graphite.Internal
 {
-    public struct GraphitePoint
+    public class GraphitePoint
     {
+        private readonly IGraphitePointTextWriter _pointTextWriter;
+
         public GraphitePoint(
             string context,
-            string name,
+            string measurement,
             IReadOnlyDictionary<string, object> fields,
             MetricTags tags,
+            IGraphitePointTextWriter pointTextWriter,
             DateTime? utcTimestamp = null)
         {
-            if (string.IsNullOrEmpty(name))
+            _pointTextWriter = pointTextWriter ?? throw new ArgumentNullException(nameof(pointTextWriter));
+
+            if (string.IsNullOrEmpty(measurement))
             {
-                throw new ArgumentException("A name must be specified", nameof(name));
+                throw new ArgumentException("A measurement must be specified", nameof(measurement));
             }
 
             if (fields == null || fields.Count == 0)
@@ -38,7 +44,7 @@ namespace App.Metrics.Formatters.Graphite
             }
 
             Context = context;
-            Name = name;
+            Measurement = measurement;
             Fields = fields;
             Tags = tags;
             UtcTimestamp = utcTimestamp ?? DateTime.UtcNow;
@@ -48,10 +54,20 @@ namespace App.Metrics.Formatters.Graphite
 
         public IReadOnlyDictionary<string, object> Fields { get; }
 
-        public string Name { get; }
+        public string Measurement { get; }
 
         public MetricTags Tags { get; }
 
-        public DateTime UtcTimestamp { get; }
+        public DateTime? UtcTimestamp { get; }
+
+        public void Write(TextWriter textWriter, bool writeTimestamp = true)
+        {
+            if (textWriter == null)
+            {
+                throw new ArgumentNullException(nameof(textWriter));
+            }
+
+            _pointTextWriter.Write(textWriter, this, writeTimestamp);
+        }
     }
 }

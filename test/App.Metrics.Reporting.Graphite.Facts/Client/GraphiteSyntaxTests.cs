@@ -3,7 +3,7 @@
 // </copyright>
 
 using System;
-using App.Metrics.Formatters.Graphite;
+using App.Metrics.Formatters.Graphite.Internal;
 using FluentAssertions;
 using Xunit;
 

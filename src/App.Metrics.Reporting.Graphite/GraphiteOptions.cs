@@ -3,16 +3,15 @@
 // </copyright>
 
 using System;
-using App.Metrics.Formatters.Graphite;
 using App.Metrics.Reporting.Graphite.Client;
 
 namespace App.Metrics.Reporting.Graphite
 {
     public class GraphiteOptions
     {
-        public GraphiteOptions(Uri address)
+        public GraphiteOptions(Uri baseUri)
         {
-            BaseUri = address ?? throw new ArgumentNullException(nameof(address));
+            BaseUri = baseUri ?? throw new ArgumentNullException(nameof(baseUri));
         }
 
         public GraphiteOptions()
@@ -20,12 +19,6 @@ namespace App.Metrics.Reporting.Graphite
         }
 
         public Uri BaseUri { get; set; }
-
-        // ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
-        public int BatchSize { get; set; } = Constants.DefaultBatchSize;
-        // ReSharper restore AutoPropertyCanBeMadeGetOnly.Global
-
-        public GraphiteAuthorizationSchemes AuthorizationSchema { get; set; }
 
         /// <summary>
         ///     Gets the number of Graphite notes that must confirm the write
@@ -55,14 +48,5 @@ namespace App.Metrics.Reporting.Graphite
                 }
             }
         }
-
-        /// <summary>
-        ///     Gets or sets the metric name formatter func which takes the metric context and name and returns a formatted string
-        ///     which will be reported to influx as the measurement
-        /// </summary>
-        /// <value>
-        ///     The metric name formatter.
-        /// </value>
-        public IGraphiteNameFormatter MetricNameFormatter { get; set; }
     }
 }

@@ -1,15 +1,15 @@
-﻿// <copyright file="HttpPolicy.cs" company="Allan Hardy">
+﻿// <copyright file="ClientPolicy.cs" company="Allan Hardy">
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 
 using System;
 using ClientConstants = App.Metrics.Reporting.Graphite.Client.Constants;
 
-namespace App.Metrics.Reporting.Graphite
+namespace App.Metrics.Reporting.Graphite.Client
 {
-    public class HttpPolicy
+    public class ClientPolicy
     {
-        public HttpPolicy()
+        public ClientPolicy()
         {
             FailuresBeforeBackoff = ClientConstants.DefaultFailuresBeforeBackoff;
             BackoffPeriod = ClientConstants.DefaultBackoffPeriod;

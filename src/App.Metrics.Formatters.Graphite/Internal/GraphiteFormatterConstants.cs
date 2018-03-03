@@ -2,14 +2,13 @@
 // Copyright (c) Allan Hardy. All rights reserved.
 // </copyright>
 
-using System;
 using System.Collections.Generic;
 
-namespace App.Metrics.Formatters.Graphite
+namespace App.Metrics.Formatters.Graphite.Internal
 {
     public static class GraphiteFormatterConstants
     {
-        public class GraphiteDefaults
+        public static class GraphiteDefaults
         {
             public static readonly Dictionary<ApdexValueDataKeys, string> CustomApdexKeys = new Dictionary<ApdexValueDataKeys, string>
                                                                                             {
@@ -104,12 +103,7 @@ namespace App.Metrics.Formatters.Graphite
                                                                                                     { MeterValueDataKeys.Rate15M, "Rate-15-Min" }
                                                                                                 };
 
-            public static readonly DefaultGraphiteNameFormatter MetricNameFormatter = new DefaultGraphiteNameFormatter();
-
-            public static string MetricTagValueFormatter(string arg)
-            {
-                throw new System.NotImplementedException();
-            }
+            public static readonly IGraphitePointTextWriter MetricPointTextWriter = new DefaultGraphitePointTextWriter();
         }
     }
 }

@@ -36,7 +36,7 @@ namespace App.Metrics.Reporting.Graphite
 
             _graphiteClient = graphiteClient ?? throw new ArgumentNullException(nameof(graphiteClient));
 
-            Formatter = options.MetricsOutputFormatter ?? new MetricsGraphiteOutputFormatter();
+            Formatter = options.MetricsOutputFormatter ?? new MetricsGraphitePlainTextProtocolOutputFormatter();
 
             FlushInterval = options.FlushInterval > TimeSpan.Zero
                 ? options.FlushInterval
