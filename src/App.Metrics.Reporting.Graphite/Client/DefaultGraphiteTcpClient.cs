@@ -19,18 +19,17 @@ namespace App.Metrics.Reporting.Graphite.Client
         private static long _backOffTicks;
         private static long _failureAttempts;
         private static long _failuresBeforeBackoff;
-        private readonly TcpClient _client;
+        private readonly int _sendTimeout;
         private readonly GraphiteOptions _options;
 
         public DefaultGraphiteTcpClient(
-            TcpClient client,
             GraphiteOptions options,
             ClientPolicy clientPolicy)
         {
-            _client = client;
             _options = options;
             _backOffPeriod = clientPolicy.BackoffPeriod;
             _failuresBeforeBackoff = clientPolicy.FailuresBeforeBackoff;
+            _sendTimeout = clientPolicy.Timeout.Milliseconds;
             _failureAttempts = 0;
         }
 
@@ -49,26 +48,25 @@ namespace App.Metrics.Reporting.Graphite.Client
 
             try
             {
-                if (!_client.Connected)
+                using (var client = new TcpClient { SendTimeout = _sendTimeout })
                 {
                     Logger.Trace("Opening TCP Connection for Graphite");
-                    await _client.ConnectAsync(_options.BaseUri.Host, _options.BaseUri.Port);
-                }
+                    await client.ConnectAsync(_options.BaseUri.Host, _options.BaseUri.Port).ConfigureAwait(false);
 
-                using (var stream = _client.GetStream())
-                {
-                    using (var writer = new StreamWriter(stream) { NewLine = "\n" })
+                    using (var stream = client.GetStream())
                     {
-                        await writer.WriteLineAsync(payload);
+                        using (var writer = new StreamWriter(stream) { NewLine = "\n" })
+                        {
+                            await writer.WriteLineAsync(payload).ConfigureAwait(false);
+                            await writer.FlushAsync().ConfigureAwait(false);
+                        }
 
-                        await writer.FlushAsync();
+                        await stream.FlushAsync(cancellationToken).ConfigureAwait(false);
+
+                        Logger.Trace("Successful write to Graphite - TCP");
+
+                        return new GraphiteWriteResult(true);
                     }
-
-                    await stream.FlushAsync(cancellationToken);
-
-                    Logger.Trace("Successful write to Graphite - TCP");
-
-                    return new GraphiteWriteResult(true);
                 }
             }
             catch (Exception ex)

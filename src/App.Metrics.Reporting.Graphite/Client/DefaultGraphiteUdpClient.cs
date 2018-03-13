@@ -13,24 +13,23 @@ namespace App.Metrics.Reporting.Graphite.Client
 {
     public class DefaultGraphiteUdpClient : IGraphiteClient
     {
-       private static readonly ILog Logger = LogProvider.For<DefaultGraphiteUdpClient>();
+        private static readonly ILog Logger = LogProvider.For<DefaultGraphiteUdpClient>();
 
         private static TimeSpan _backOffPeriod;
         private static long _backOffTicks;
         private static long _failureAttempts;
         private static long _failuresBeforeBackoff;
-        private readonly UdpClient _client;
+        private readonly int _sendTimeout;
         private readonly GraphiteOptions _options;
 
         public DefaultGraphiteUdpClient(
-            UdpClient client,
             GraphiteOptions options,
             ClientPolicy clientPolicy)
         {
-            _client = client;
             _options = options;
             _backOffPeriod = clientPolicy.BackoffPeriod;
             _failuresBeforeBackoff = clientPolicy.FailuresBeforeBackoff;
+            _sendTimeout = clientPolicy.Timeout.Milliseconds;
             _failureAttempts = 0;
         }
 
@@ -49,19 +48,19 @@ namespace App.Metrics.Reporting.Graphite.Client
 
             try
             {
-                if (!_client.Client.Connected)
+                using (var client = new UdpClient { Client = { SendTimeout = _sendTimeout } })
                 {
                     Logger.Trace("Opening UDP Connection for Graphite");
-                    await _client.Client.ConnectAsync(_options.BaseUri.Host, _options.BaseUri.Port);
+                    await client.Client.ConnectAsync(_options.BaseUri.Host, _options.BaseUri.Port).ConfigureAwait(false);
+
+                    var datagram = Encoding.UTF8.GetBytes(payload);
+
+                    await client.Client.SendAsync(new ArraySegment<byte>(datagram), SocketFlags.None).ConfigureAwait(false);
+
+                    Logger.Trace("Successful write to Graphite - UDP");
+
+                    return new GraphiteWriteResult(true);
                 }
-
-                var datagram = Encoding.UTF8.GetBytes(payload);
-
-                await _client.Client.SendAsync(new ArraySegment<byte>(datagram), SocketFlags.None);
-
-                Logger.Trace("Successful write to Graphite - UDP");
-
-                return new GraphiteWriteResult(true);
             }
             catch (Exception ex)
             {
