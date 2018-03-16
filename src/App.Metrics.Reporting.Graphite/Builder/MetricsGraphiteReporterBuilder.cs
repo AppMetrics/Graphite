@@ -176,14 +176,12 @@ namespace App.Metrics
         {
             if (options.Graphite.Protocol == Protocol.Tcp)
             {
-                var client = new TcpClient { SendTimeout = clientPolicy.Timeout.Milliseconds };
-                return new DefaultGraphiteTcpClient(client, options.Graphite, clientPolicy);
+                return new DefaultGraphiteTcpClient(options.Graphite, clientPolicy);
             }
 
             if (options.Graphite.Protocol == Protocol.Udp)
             {
-                var client = new UdpClient { Client = { SendTimeout = clientPolicy.Timeout.Milliseconds } };
-                return new DefaultGraphiteUdpClient(client, options.Graphite, clientPolicy);
+                return new DefaultGraphiteUdpClient(options.Graphite, clientPolicy);
             }
 
             if (options.Graphite.Protocol == Protocol.Pickled)

@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace App.Metrics.Formatters.Graphite.Internal
 {
-    public class GraphiteSyntax
+    public static class GraphiteSyntax
     {
         private const RegexOptions RegexOptions = System.Text.RegularExpressions.RegexOptions.CultureInvariant | System.Text.RegularExpressions.RegexOptions.Compiled;
         private static readonly Regex InvalidAllowDotsRegex = new Regex(@"[^a-zA-Z0-9\-%&.]+", RegexOptions);
