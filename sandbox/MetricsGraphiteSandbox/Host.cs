@@ -17,7 +17,7 @@ namespace MetricsGraphiteSandbox
 {
     public static class Host
     {
-        private const string GraphiteUrl = "net.tcp://localhost:32771";
+        private const string GraphiteUrl = "net.tcp://localhost:32775";
         private static readonly Random Rnd = new Random();
 
         private static IConfigurationRoot Configuration { get; set; }
