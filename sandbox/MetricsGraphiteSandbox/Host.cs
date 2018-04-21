@@ -17,7 +17,7 @@ namespace MetricsGraphiteSandbox
 {
     public static class Host
     {
-        private const string GraphiteUrl = "net.tcp://localhost:32775";
+        private const string GraphiteUrl = "net.tcp://localhost:32786";
         private static readonly Random Rnd = new Random();
 
         private static IConfigurationRoot Configuration { get; set; }
@@ -120,10 +120,17 @@ namespace MetricsGraphiteSandbox
 
             var metricsConfigSection = Configuration.GetSection(nameof(MetricsOptions));
 
+            var fields = new GeneratedMetricNameMapping();
+            fields.OnlyIncludeMeterValues(MeterValueDataKeys.Rate1M);
+            fields.ExcludeApdexValues();
+            fields.OnlyIncludeCounterValues(CounterValueDataKeys.Value);
+            fields.ExcludeGaugeValues();
+            fields.ExcludeHistogramValues();
+
             Metrics = new MetricsBuilder()
                 .Configuration.Configure(metricsConfigSection.AsEnumerable())
                 // Adds GraphitePlainTextProtocolFormatter with default options
-                .Report.ToGraphite(GraphiteUrl, TimeSpan.FromSeconds(5))
+                .Report.ToGraphite(GraphiteUrl, TimeSpan.FromSeconds(5), options => options.MetricNameMapping = fields)
                 .Build();
 
             Reporter = Metrics.ReportRunner;

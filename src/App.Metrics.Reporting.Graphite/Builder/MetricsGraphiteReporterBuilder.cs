@@ -3,8 +3,8 @@
 // </copyright>
 
 using System;
-using System.Net.Sockets;
 using App.Metrics.Builder;
+using App.Metrics.Formatters.Graphite;
 using App.Metrics.Reporting.Graphite;
 using App.Metrics.Reporting.Graphite.Client;
 
@@ -129,13 +129,15 @@ namespace App.Metrics
         ///     The <see cref="T:System.TimeSpan" /> interval used if intended to schedule metrics
         ///     reporting.
         /// </param>
+        /// <param name="optionsSetup">The setup action to configure the <see cref="MetricsGraphitePlainTextProtocolOptions"/> to use.</param>
         /// <returns>
         ///     An <see cref="IMetricsBuilder" /> that can be used to further configure App Metrics.
         /// </returns>
         public static IMetricsBuilder ToGraphite(
             this IMetricsReportingBuilder metricReporterProviderBuilder,
             string url,
-            TimeSpan flushInterval)
+            TimeSpan flushInterval,
+            Action<MetricsGraphitePlainTextProtocolOptions> optionsSetup = null)
         {
             if (metricReporterProviderBuilder == null)
             {
@@ -152,20 +154,27 @@ namespace App.Metrics
                 throw new InvalidOperationException($"{nameof(url)} must be a valid absolute URI");
             }
 
+            var plainTextProtocolOptions = new MetricsGraphitePlainTextProtocolOptions();
+
+            optionsSetup?.Invoke(plainTextProtocolOptions);
+
+            var formatter = new MetricsGraphitePlainTextProtocolOutputFormatter(plainTextProtocolOptions);
+
             var options = new MetricsReportingGraphiteOptions
                           {
                               FlushInterval = flushInterval,
                               Graphite =
                               {
                                   BaseUri = uri
-                              }
+                              },
+                              MetricsOutputFormatter = formatter
                           };
 
             var httpClient = CreateClient(options, options.ClientPolicy);
             var reporter = new GraphiteReporter(options, httpClient);
 
             var builder = metricReporterProviderBuilder.Using(reporter);
-            builder.OutputMetrics.AsGraphitePlainTextProtocol();
+            builder.OutputMetrics.AsGraphitePlainTextProtocol(plainTextProtocolOptions);
 
             return builder;
         }

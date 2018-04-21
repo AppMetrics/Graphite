@@ -34,9 +34,9 @@ namespace App.Metrics.Formatters.Graphite
         public GeneratedMetricNameMapping MetricNameMapping { get; }
 
         /// <inheritdoc />
-        public void Write(string context, string name, object value, MetricTags tags, DateTime timestamp)
+        public void Write(string context, string name, string field, object value, MetricTags tags, DateTime timestamp)
         {
-            _points.Add(new GraphitePoint(context, name, new Dictionary<string, object> { { "value", value } }, tags, _metricNameFormatter, timestamp));
+            _points.Add(new GraphitePoint(context, name, new Dictionary<string, object> { { field, value } }, tags, _metricNameFormatter, timestamp));
         }
 
         /// <inheritdoc />
@@ -51,7 +51,6 @@ namespace App.Metrics.Formatters.Graphite
         public void Dispose()
         {
             Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         /// <summary>

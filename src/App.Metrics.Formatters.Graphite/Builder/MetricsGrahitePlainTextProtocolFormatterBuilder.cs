@@ -54,6 +54,32 @@ namespace App.Metrics
         ///     The <see cref="IMetricsOutputFormattingBuilder" /> used to configure InfluxDB Lineprotocol formatting
         ///     options.
         /// </param>
+        /// <param name="options">The Graphite Plain Text Protocol formatting options to use.</param>
+        /// <returns>
+        ///     An <see cref="IMetricsBuilder" /> that can be used to further configure App Metrics.
+        /// </returns>
+        public static IMetricsBuilder AsGraphitePlainTextProtocol(
+            this IMetricsOutputFormattingBuilder metricFormattingBuilder,
+            MetricsGraphitePlainTextProtocolOptions options)
+        {
+            if (metricFormattingBuilder == null)
+            {
+                throw new ArgumentNullException(nameof(metricFormattingBuilder));
+            }
+
+            var formatter = new MetricsGraphitePlainTextProtocolOutputFormatter(options);
+
+            return metricFormattingBuilder.Using(formatter, false);
+        }
+
+        /// <summary>
+        ///     Add the <see cref="MetricsGraphitePlainTextProtocolOutputFormatter" /> allowing metrics to optionally be reported to
+        ///     Graphite using the Plain Text Protocol.
+        /// </summary>
+        /// <param name="metricFormattingBuilder">s
+        ///     The <see cref="IMetricsOutputFormattingBuilder" /> used to configure InfluxDB Lineprotocol formatting
+        ///     options.
+        /// </param>
         /// <returns>
         ///     An <see cref="IMetricsBuilder" /> that can be used to further configure App Metrics.
         /// </returns>
