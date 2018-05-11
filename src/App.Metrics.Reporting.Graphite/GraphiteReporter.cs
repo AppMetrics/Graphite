@@ -43,7 +43,7 @@ namespace App.Metrics.Reporting.Graphite
                 : AppMetricsConstants.Reporting.DefaultFlushInterval;
 
             Filter = options.Filter;
-            Logger.Info($"Using Metrics Reporter {this}. Url: {options.Graphite.BaseUri} FlushInterval: {FlushInterval}");
+            Logger.Debug($"Using Metrics Reporter {this}. Url: {options.Graphite.BaseUri} FlushInterval: {FlushInterval}");
         }
 
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace App.Metrics.Reporting.Graphite
         public IMetricsOutputFormatter Formatter { get; set; }
 
         /// <inheritdoc />
-        public async Task<bool> FlushAsync(MetricsDataValueSource metricsData, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<bool> FlushAsync(MetricsDataValueSource metricsData, CancellationToken cancellationToken = default)
         {
             Logger.Trace("Flushing metrics snapshot");
 

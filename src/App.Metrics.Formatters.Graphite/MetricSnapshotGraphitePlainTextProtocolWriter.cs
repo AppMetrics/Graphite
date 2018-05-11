@@ -19,19 +19,13 @@ namespace App.Metrics.Formatters.Graphite
 
         public MetricSnapshotGraphitePlainTextProtocolWriter(
             TextWriter textWriter,
-            IGraphitePointTextWriter metricNameFormatter = null,
-            GeneratedMetricNameMapping dataKeys = null)
+            IGraphitePointTextWriter metricNameFormatter = null)
         {
             _textWriter = textWriter ?? throw new ArgumentNullException(nameof(textWriter));
             _points = new GraphitePoints();
 
             _metricNameFormatter = metricNameFormatter ?? new DefaultGraphitePointTextWriter();
-
-            MetricNameMapping = dataKeys ?? new GeneratedMetricNameMapping();
         }
-
-        /// <inheritdoc />
-        public GeneratedMetricNameMapping MetricNameMapping { get; }
 
         /// <inheritdoc />
         public void Write(string context, string name, string field, object value, MetricTags tags, DateTime timestamp)

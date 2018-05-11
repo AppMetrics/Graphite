@@ -13,16 +13,9 @@ namespace App.Metrics.Formatters.Graphite
     {
         public MetricsGraphitePlainTextProtocolOptions()
         {
-            MetricNameMapping = new GeneratedMetricNameMapping(
-                GraphiteFormatterConstants.GraphiteDefaults.CustomHistogramDataKeys,
-                GraphiteFormatterConstants.GraphiteDefaults.CustomMeterDataKeys,
-                GraphiteFormatterConstants.GraphiteDefaults.CustomApdexKeys,
-                GraphiteFormatterConstants.GraphiteDefaults.CustomCounterDataKeys);
             MetricPointTextWriter = GraphiteFormatterConstants.GraphiteDefaults.MetricPointTextWriter;
         }
 
         public IGraphitePointTextWriter MetricPointTextWriter { get; set; }
-
-        public GeneratedMetricNameMapping MetricNameMapping { get; set; }
     }
 }

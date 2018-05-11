@@ -20,15 +20,34 @@ namespace App.Metrics.Formatters.Graphite
         public MetricsGraphitePlainTextProtocolOutputFormatter()
         {
             _options = new MetricsGraphitePlainTextProtocolOptions();
+            MetricFields = new MetricFields();
+            MetricFields.DefaultGraphiteMetricFieldNames();
+        }
+
+        public MetricsGraphitePlainTextProtocolOutputFormatter(MetricFields metricFields)
+        {
+            _options = new MetricsGraphitePlainTextProtocolOptions();
+            MetricFields = metricFields ?? throw new ArgumentNullException(nameof(metricFields));
         }
 
         public MetricsGraphitePlainTextProtocolOutputFormatter(MetricsGraphitePlainTextProtocolOptions options)
         {
             _options = options ?? throw new ArgumentNullException(nameof(options));
+            MetricFields = new MetricFields();
+            MetricFields.DefaultGraphiteMetricFieldNames();
+        }
+
+        public MetricsGraphitePlainTextProtocolOutputFormatter(MetricsGraphitePlainTextProtocolOptions options, MetricFields metricFields)
+        {
+            _options = options ?? throw new ArgumentNullException(nameof(options));
+            MetricFields = metricFields ?? throw new ArgumentNullException(nameof(metricFields));
         }
 
         /// <inheritdoc />
         public MetricsMediaTypeValue MediaType => new MetricsMediaTypeValue("text", "vnd.appmetrics.metrics.graphite", "v1", "plain");
+
+        /// <inheritdoc />
+        public MetricFields MetricFields { get; set; }
 
         /// <inheritdoc />
         public Task WriteAsync(
@@ -47,10 +66,9 @@ namespace App.Metrics.Formatters.Graphite
             {
                 using (var textWriter = new MetricSnapshotGraphitePlainTextProtocolWriter(
                     streamWriter,
-                    _options.MetricPointTextWriter,
-                    _options.MetricNameMapping))
+                    _options.MetricPointTextWriter))
                 {
-                    serializer.Serialize(textWriter, metricsData);
+                    serializer.Serialize(textWriter, metricsData, MetricFields);
                 }
             }
 

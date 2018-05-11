@@ -120,17 +120,17 @@ namespace MetricsGraphiteSandbox
 
             var metricsConfigSection = Configuration.GetSection(nameof(MetricsOptions));
 
-            var fields = new GeneratedMetricNameMapping();
-            fields.OnlyIncludeMeterValues(MeterValueDataKeys.Rate1M);
-            fields.ExcludeApdexValues();
-            fields.OnlyIncludeCounterValues(CounterValueDataKeys.Value);
-            fields.ExcludeGaugeValues();
-            fields.ExcludeHistogramValues();
-
             Metrics = new MetricsBuilder()
                 .Configuration.Configure(metricsConfigSection.AsEnumerable())
                 // Adds GraphitePlainTextProtocolFormatter with default options
-                .Report.ToGraphite(GraphiteUrl, TimeSpan.FromSeconds(5), options => options.MetricNameMapping = fields)
+                .Report.ToGraphite(GraphiteUrl, TimeSpan.FromSeconds(5), fields =>
+                      {
+                          fields.Meter.OnlyInclude(MeterFields.Rate1M);
+                          fields.Apdex.Exclude();
+                          fields.Counter.OnlyInclude(CounterFields.Value);
+                          fields.Gauge.Exclude();
+                          fields.Histogram.Exclude();
+                      })
                 .Build();
 
             Reporter = Metrics.ReportRunner;
