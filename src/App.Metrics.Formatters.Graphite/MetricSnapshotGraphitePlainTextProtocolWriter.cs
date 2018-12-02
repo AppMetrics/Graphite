@@ -1,5 +1,5 @@
-﻿// <copyright file="MetricSnapshotGraphitePlainTextProtocolWriter.cs" company="Allan Hardy">
-// Copyright (c) Allan Hardy. All rights reserved.
+﻿// <copyright file="MetricSnapshotGraphitePlainTextProtocolWriter.cs" company="App Metrics Contributors">
+// Copyright (c) App Metrics Contributors. All rights reserved.
 // </copyright>
 
 using System;
@@ -19,24 +19,18 @@ namespace App.Metrics.Formatters.Graphite
 
         public MetricSnapshotGraphitePlainTextProtocolWriter(
             TextWriter textWriter,
-            IGraphitePointTextWriter metricNameFormatter = null,
-            GeneratedMetricNameMapping dataKeys = null)
+            IGraphitePointTextWriter metricNameFormatter = null)
         {
             _textWriter = textWriter ?? throw new ArgumentNullException(nameof(textWriter));
             _points = new GraphitePoints();
 
             _metricNameFormatter = metricNameFormatter ?? new DefaultGraphitePointTextWriter();
-
-            MetricNameMapping = dataKeys ?? new GeneratedMetricNameMapping();
         }
 
         /// <inheritdoc />
-        public GeneratedMetricNameMapping MetricNameMapping { get; }
-
-        /// <inheritdoc />
-        public void Write(string context, string name, object value, MetricTags tags, DateTime timestamp)
+        public void Write(string context, string name, string field, object value, MetricTags tags, DateTime timestamp)
         {
-            _points.Add(new GraphitePoint(context, name, new Dictionary<string, object> { { "value", value } }, tags, _metricNameFormatter, timestamp));
+            _points.Add(new GraphitePoint(context, name, new Dictionary<string, object> { { field, value } }, tags, _metricNameFormatter, timestamp));
         }
 
         /// <inheritdoc />
@@ -51,7 +45,6 @@ namespace App.Metrics.Formatters.Graphite
         public void Dispose()
         {
             Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         /// <summary>

@@ -1,5 +1,5 @@
-﻿// <copyright file="Host.cs" company="Allan Hardy">
-// Copyright (c) Allan Hardy. All rights reserved.
+﻿// <copyright file="Host.cs" company="App Metrics Contributors">
+// Copyright (c) App Metrics Contributors. All rights reserved.
 // </copyright>
 
 using System;
@@ -17,7 +17,7 @@ namespace MetricsGraphiteSandbox
 {
     public static class Host
     {
-        private const string GraphiteUrl = "net.tcp://localhost:32775";
+        private const string GraphiteUrl = "net.tcp://localhost:32786";
         private static readonly Random Rnd = new Random();
 
         private static IConfigurationRoot Configuration { get; set; }
@@ -123,7 +123,14 @@ namespace MetricsGraphiteSandbox
             Metrics = new MetricsBuilder()
                 .Configuration.Configure(metricsConfigSection.AsEnumerable())
                 // Adds GraphitePlainTextProtocolFormatter with default options
-                .Report.ToGraphite(GraphiteUrl, TimeSpan.FromSeconds(5))
+                .Report.ToGraphite(GraphiteUrl, TimeSpan.FromSeconds(5), fields =>
+                      {
+                          fields.Meter.OnlyInclude(MeterFields.Rate1M);
+                          fields.Apdex.Exclude();
+                          fields.Counter.OnlyInclude(CounterFields.Value);
+                          fields.Gauge.Exclude();
+                          fields.Histogram.Exclude();
+                      })
                 .Build();
 
             Reporter = Metrics.ReportRunner;

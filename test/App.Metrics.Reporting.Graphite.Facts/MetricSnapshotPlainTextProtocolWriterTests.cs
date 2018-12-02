@@ -1,5 +1,5 @@
-﻿// <copyright file="MetricSnapshotPlainTextProtocolWriterTests.cs" company="Allan Hardy">
-// Copyright (c) Allan Hardy. All rights reserved.
+﻿// <copyright file="MetricSnapshotPlainTextProtocolWriterTests.cs" company="App Metrics Contributors">
+// Copyright (c) App Metrics Contributors. All rights reserved.
 // </copyright>
 
 using System;
@@ -112,7 +112,7 @@ namespace App.Metrics.Reporting.Graphite.Facts
         {
             // Arrange
             var expected =
-                "counter.test.test_counter-SetItem.item.item1_value1.Total 1 1483232461\ncounter.test.test_counter-SetItem.item.item1_value1.Percent 50.00 1483232461\ncounter.test.test_counter-SetItem.item.item2_value2.Total 1 1483232461\ncounter.test.test_counter-SetItem.item.item2_value2.Percent 50.00 1483232461\ncounter.test.test_counter.value 2 1483232461\n";
+                "counter.test.test_counter-SetItem.item.item1_value1.Total 1 1483232461\ncounter.test.test_counter-SetItem.item.item1_value1.Percent 50.00 1483232461\ncounter.test.test_counter-SetItem.item.item2_value2.Total 1 1483232461\ncounter.test.test_counter-SetItem.item.item2_value2.Percent 50.00 1483232461\ncounter.test.test_counter.Value 2 1483232461\n";
             var counter = new DefaultCounterMetric();
             counter.Increment(new MetricSetItem("item1", "value1"), 1);
             counter.Increment(new MetricSetItem("item2", "value2"), 1);
@@ -134,7 +134,7 @@ namespace App.Metrics.Reporting.Graphite.Facts
         {
             // Arrange
             var expected =
-                "counter.test.test_counter-SetItem.key1.value1.key2.value2.item.item1_value1.Total 1 1483232461\ncounter.test.test_counter-SetItem.key1.value1.key2.value2.item.item1_value1.Percent 50.00 1483232461\ncounter.test.test_counter-SetItem.key1.value1.key2.value2.item.item2_value2.Total 1 1483232461\ncounter.test.test_counter-SetItem.key1.value1.key2.value2.item.item2_value2.Percent 50.00 1483232461\ncounter.test.test_counter.key1.value1.key2.value2.value 2 1483232461\n";
+                "counter.test.test_counter-SetItem.key1.value1.key2.value2.item.item1_value1.Total 1 1483232461\ncounter.test.test_counter-SetItem.key1.value1.key2.value2.item.item1_value1.Percent 50.00 1483232461\ncounter.test.test_counter-SetItem.key1.value1.key2.value2.item.item2_value2.Total 1 1483232461\ncounter.test.test_counter-SetItem.key1.value1.key2.value2.item.item2_value2.Percent 50.00 1483232461\ncounter.test.test_counter.key1.value1.key2.value2.Value 2 1483232461\n";
             var counter = new DefaultCounterMetric();
             counter.Increment(new MetricSetItem("item1", "value1"), 1);
             counter.Increment(new MetricSetItem("item2", "value2"), 1);
@@ -156,7 +156,7 @@ namespace App.Metrics.Reporting.Graphite.Facts
         {
             // Arrange
             var expected =
-                "env.staging.counter.test.test_counter-SetItem.host.server1.key1.value1.key2.value2.item.item1_value1.Total 1 1483232461\nenv.staging.counter.test.test_counter-SetItem.host.server1.key1.value1.key2.value2.item.item1_value1.Percent 50.00 1483232461\nenv.staging.counter.test.test_counter-SetItem.host.server1.key1.value1.key2.value2.item.item2_value2.Total 1 1483232461\nenv.staging.counter.test.test_counter-SetItem.host.server1.key1.value1.key2.value2.item.item2_value2.Percent 50.00 1483232461\nenv.staging.counter.test.test_counter.host.server1.key1.value1.key2.value2.value 2 1483232461\n";
+                "env.staging.counter.test.test_counter-SetItem.host.server1.key1.value1.key2.value2.item.item1_value1.Total 1 1483232461\nenv.staging.counter.test.test_counter-SetItem.host.server1.key1.value1.key2.value2.item.item1_value1.Percent 50.00 1483232461\nenv.staging.counter.test.test_counter-SetItem.host.server1.key1.value1.key2.value2.item.item2_value2.Total 1 1483232461\nenv.staging.counter.test.test_counter-SetItem.host.server1.key1.value1.key2.value2.item.item2_value2.Percent 50.00 1483232461\nenv.staging.counter.test.test_counter.host.server1.key1.value1.key2.value2.Value 2 1483232461\n";
             var counterTags = new MetricTags(new[] { "key1", "key2" }, new[] { "value1", "value2" });
             var counter = new DefaultCounterMetric();
             counter.Increment(new MetricSetItem("item1", "value1"), 1);
@@ -179,7 +179,7 @@ namespace App.Metrics.Reporting.Graphite.Facts
         {
             // Arrange
             var expected =
-                "counter.test.test_counter-SetItem.item.item1_value1.Total 1 1483232461\ncounter.test.test_counter-SetItem.item.item2_value2.Total 1 1483232461\ncounter.test.test_counter.value 2 1483232461\n";
+                "counter.test.test_counter-SetItem.item.item1_value1.Total 1 1483232461\ncounter.test.test_counter-SetItem.item.item2_value2.Total 1 1483232461\ncounter.test.test_counter.Value 2 1483232461\n";
             var counter = new DefaultCounterMetric();
             counter.Increment(new MetricSetItem("item1", "value1"), 1);
             counter.Increment(new MetricSetItem("item2", "value2"), 1);
@@ -201,7 +201,7 @@ namespace App.Metrics.Reporting.Graphite.Facts
         public void Can_report_counters()
         {
             // Arrange
-            var expected = "counter.test.test_counter.value 1 1483232461\n";
+            var expected = "counter.test.test_counter.Value 1 1483232461\n";
             var counter = new DefaultCounterMetric();
             counter.Increment(1);
             var counterValueSource = new CounterValueSource(
@@ -221,7 +221,7 @@ namespace App.Metrics.Reporting.Graphite.Facts
         public void Can_report_counters__when_multidimensional()
         {
             // Arrange
-            var expected = "env.staging.counter.test.test_counter.host.server1.value 1 1483232461\n";
+            var expected = "env.staging.counter.test.test_counter.host.server1.Value 1 1483232461\n";
             var counter = new DefaultCounterMetric();
             counter.Increment(1);
             var counterValueSource = new CounterValueSource(
@@ -241,7 +241,7 @@ namespace App.Metrics.Reporting.Graphite.Facts
         public void Can_report_gauges()
         {
             // Arrange
-            var expected = "gauge.test.test_gauge.value 1.00 1483232461\n";
+            var expected = "gauge.test.test_gauge.Value 1.00 1483232461\n";
             var gauge = new FunctionGauge(() => 1);
             var gaugeValueSource = new GaugeValueSource(
                 "test gauge",
@@ -260,7 +260,7 @@ namespace App.Metrics.Reporting.Graphite.Facts
         public void Can_report_gauges__when_multidimensional()
         {
             // Arrange
-            var expected = "env.staging.gauge.test.gauge-group.host.server1.value 1.00 1483232461\n";
+            var expected = "env.staging.gauge.test.gauge-group.host.server1.Value 1.00 1483232461\n";
             var gauge = new FunctionGauge(() => 1);
             var gaugeValueSource = new GaugeValueSource(
                 "gauge-group" + MultidimensionalMetricNameSuffix,
@@ -462,12 +462,14 @@ namespace App.Metrics.Reporting.Graphite.Facts
         {
             var settings = new MetricsGraphitePlainTextProtocolOptions();
             var serializer = new MetricSnapshotSerializer();
+            var fields = new MetricFields();
+            fields.DefaultGraphiteMetricFieldNames();
 
             using (var sw = new StringWriter())
             {
-                using (var packer = new MetricSnapshotGraphitePlainTextProtocolWriter(sw, settings.MetricPointTextWriter, settings.MetricNameMapping))
+                using (var packer = new MetricSnapshotGraphitePlainTextProtocolWriter(sw, settings.MetricPointTextWriter))
                 {
-                    serializer.Serialize(packer, dataValueSource);
+                    serializer.Serialize(packer, dataValueSource, fields);
                 }
 
                 sw.ToString().Should().Be(expected);
